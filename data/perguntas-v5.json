@@ -1,0 +1,1284 @@
+{
+  "escala": [
+    {
+      "v": 2,
+      "t": "Concordo totalmente"
+    },
+    {
+      "v": 1,
+      "t": "Concordo"
+    },
+    {
+      "v": 0,
+      "t": "Neutro ou não sei"
+    },
+    {
+      "v": -1,
+      "t": "Discordo"
+    },
+    {
+      "v": -2,
+      "t": "Discordo totalmente"
+    }
+  ],
+  "eixos": [
+    {
+      "id": "MERC",
+      "nome": "Mercado",
+      "esq": "Vende no Brasil",
+      "dir": "Vende fora",
+      "explica": "Onde está o cliente que paga a conta."
+    },
+    {
+      "id": "TRAB",
+      "nome": "Estrutura de custo",
+      "esq": "Capital e máquina",
+      "dir": "Mão de obra",
+      "explica": "Quanto a folha pesa no custo. É o que mais muda no Paraguai."
+    },
+    {
+      "id": "INS",
+      "nome": "Energia e insumo",
+      "esq": "Pesam pouco",
+      "dir": "Pesam muito",
+      "explica": "Energia elétrica e insumo importado. Pesa a favor da maquila."
+    },
+    {
+      "id": "REG",
+      "nome": "Regulação",
+      "esq": "Pouco regulado",
+      "dir": "Fortemente regulado",
+      "explica": "Licença, registro sanitário, concessão. Pode travar a mudança antes do imposto."
+    },
+    {
+      "id": "MOB",
+      "nome": "Mobilidade do dono",
+      "esq": "Dono fica",
+      "dir": "Dono e família vão",
+      "explica": "Sem mudança real de vida não existe saída fiscal da pessoa física."
+    },
+    {
+      "id": "REND",
+      "nome": "Origem da renda pessoal",
+      "esq": "Lucro da empresa no Brasil",
+      "dir": "Renda e patrimônio fora",
+      "explica": "Dividendo de empresa brasileira não fica mais barato saindo. Renda de fora pode ficar."
+    },
+    {
+      "id": "PRIO",
+      "nome": "Motivo",
+      "esq": "Conta de imposto",
+      "dir": "Qualidade de vida",
+      "explica": "Segurança, escola, passaporte e idioma contam diferente da conta fiscal."
+    },
+    {
+      "id": "RISCO",
+      "nome": "Apetite a risco",
+      "esq": "Prudente",
+      "dir": "Arrojado",
+      "explica": "Tolerância a operar longe, em outra língua, com regra que muda."
+    }
+  ],
+  "modos": {
+    "rapido": "Cerca de 20 perguntas, 5 minutos. Responde só as marcadas como núcleo.",
+    "completo": "Até 78 perguntas, 15 a 20 minutos. Algumas aparecem só conforme as respostas anteriores."
+  },
+  "fatos": [
+    {
+      "id": "setor",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Qual é o setor principal da empresa?",
+      "opcoes": [
+        [
+          "textil",
+          "Têxtil e confecção"
+        ],
+        [
+          "calcados",
+          "Calçados"
+        ],
+        [
+          "plastico",
+          "Plásticos e embalagens"
+        ],
+        [
+          "metal",
+          "Alumínio, metalurgia, esquadrias"
+        ],
+        [
+          "autopecas",
+          "Autopeças e componentes elétricos"
+        ],
+        [
+          "alimentos",
+          "Alimentos, frigorífico, laticínio"
+        ],
+        [
+          "farma",
+          "Farmacêutico, saúde, químico regulado"
+        ],
+        [
+          "logistica",
+          "Transporte e logística"
+        ],
+        [
+          "varejo",
+          "Varejo e comércio"
+        ],
+        [
+          "tecnologia",
+          "Tecnologia e software"
+        ],
+        [
+          "servicos",
+          "Serviços profissionais"
+        ],
+        [
+          "agro",
+          "Agronegócio"
+        ],
+        [
+          "outro",
+          "Outro"
+        ]
+      ]
+    },
+    {
+      "id": "industria",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "A empresa fabrica um produto físico?",
+      "opcoes": [
+        [
+          "sim",
+          "Sim, temos fábrica"
+        ],
+        [
+          "terceiro",
+          "Sim, mas a produção é terceirizada"
+        ],
+        [
+          "nao",
+          "Não, vendemos serviço ou revenda"
+        ]
+      ]
+    },
+    {
+      "id": "porte",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Quantos funcionários a empresa tem?",
+      "opcoes": [
+        [
+          "ate10",
+          "Até 10"
+        ],
+        [
+          "11a50",
+          "De 11 a 50"
+        ],
+        [
+          "51a200",
+          "De 51 a 200"
+        ],
+        [
+          "201a1000",
+          "De 201 a 1.000"
+        ],
+        [
+          "mais1000",
+          "Mais de 1.000"
+        ]
+      ]
+    },
+    {
+      "id": "regime",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Qual é o regime tributário da empresa?",
+      "opcoes": [
+        [
+          "simples",
+          "Simples Nacional"
+        ],
+        [
+          "presumido",
+          "Lucro Presumido"
+        ],
+        [
+          "real",
+          "Lucro Real"
+        ],
+        [
+          "naosei",
+          "Não sei"
+        ]
+      ]
+    },
+    {
+      "id": "export",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Quanto da receita vem de clientes fora do Brasil?",
+      "opcoes": [
+        [
+          "0",
+          "Nada"
+        ],
+        [
+          "10",
+          "Menos de 10%"
+        ],
+        [
+          "30",
+          "Entre 10% e 30%"
+        ],
+        [
+          "60",
+          "Entre 30% e 60%"
+        ],
+        [
+          "90",
+          "Mais de 60%"
+        ]
+      ],
+      "eixo": {
+        "MERC": {
+          "0": -2,
+          "10": -1,
+          "30": 0,
+          "60": 1,
+          "90": 2
+        }
+      }
+    },
+    {
+      "id": "folha",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Quanto a folha de pagamento pesa no custo total?",
+      "opcoes": [
+        [
+          "10",
+          "Menos de 15%"
+        ],
+        [
+          "25",
+          "Entre 15% e 30%"
+        ],
+        [
+          "45",
+          "Entre 30% e 50%"
+        ],
+        [
+          "60",
+          "Mais de 50%"
+        ],
+        [
+          "ns",
+          "Não sei"
+        ]
+      ],
+      "eixo": {
+        "TRAB": {
+          "10": -2,
+          "25": -1,
+          "45": 1,
+          "60": 2,
+          "ns": 0
+        }
+      }
+    },
+    {
+      "id": "dividendos",
+      "nucleo": true,
+      "tipo": "numero",
+      "t": "Quanto você retira de dividendos por mês da empresa brasileira?",
+      "rotulo": "R$ por mês",
+      "passo": 1000,
+      "simulador": "monthly"
+    },
+    {
+      "id": "rend_ext",
+      "nucleo": true,
+      "tipo": "numero",
+      "t": "Quanto rendem por ano seus investimentos fora do Brasil?",
+      "rotulo": "R$ por ano (zero se não tem)",
+      "passo": 10000,
+      "simulador": "investments"
+    },
+    {
+      "id": "familia",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Quem iria com você numa mudança?",
+      "opcoes": [
+        [
+          "so",
+          "Só eu"
+        ],
+        [
+          "casal",
+          "Eu e cônjuge"
+        ],
+        [
+          "filhos",
+          "Família com filhos em idade escolar"
+        ],
+        [
+          "ninguem",
+          "Ninguém: não pretendo me mudar"
+        ]
+      ],
+      "eixo": {
+        "MOB": {
+          "so": 1,
+          "casal": 1,
+          "filhos": 1,
+          "ninguem": -2
+        }
+      }
+    },
+    {
+      "id": "cidadania",
+      "nucleo": true,
+      "tipo": "escolha",
+      "t": "Você ou a família tem outra cidadania?",
+      "opcoes": [
+        [
+          "nao",
+          "Não"
+        ],
+        [
+          "ue",
+          "Portuguesa, italiana, espanhola ou outra da União Europeia"
+        ],
+        [
+          "eua",
+          "Americana"
+        ],
+        [
+          "processo",
+          "Em processo"
+        ]
+      ]
+    },
+    {
+      "id": "prazo",
+      "nucleo": false,
+      "tipo": "escolha",
+      "t": "Em quanto tempo você quer decidir?",
+      "opcoes": [
+        [
+          "1",
+          "Nos próximos 12 meses"
+        ],
+        [
+          "3",
+          "Em até 3 anos"
+        ],
+        [
+          "5",
+          "Sem pressa, mais de 3 anos"
+        ]
+      ]
+    },
+    {
+      "id": "capital",
+      "nucleo": false,
+      "tipo": "escolha",
+      "t": "Quanto você poderia investir fora sem depender desse dinheiro?",
+      "opcoes": [
+        [
+          "100",
+          "Menos de US$ 100 mil"
+        ],
+        [
+          "500",
+          "Entre US$ 100 mil e US$ 500 mil"
+        ],
+        [
+          "1000",
+          "Entre US$ 500 mil e US$ 1 milhão"
+        ],
+        [
+          "mais",
+          "Mais de US$ 1 milhão"
+        ]
+      ]
+    }
+  ],
+  "afirmacoes": [
+    {
+      "id": "m1",
+      "nucleo": true,
+      "bloco": "Negócio",
+      "t": "Meus melhores clientes estão ou poderiam estar fora do Brasil.",
+      "eixo": {
+        "MERC": 1
+      }
+    },
+    {
+      "id": "m2",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "Se eu fabricasse no Paraguai, continuaria vendendo quase tudo para o Brasil.",
+      "eixo": {
+        "MERC": -0.5
+      },
+      "se": {
+        "industria": [
+          "sim",
+          "terceiro"
+        ]
+      }
+    },
+    {
+      "id": "m3",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "Perco vendas para produtos importados da Ásia.",
+      "eixo": {
+        "TRAB": 0.5,
+        "INS": 0.5
+      },
+      "se": {
+        "industria": [
+          "sim",
+          "terceiro"
+        ]
+      }
+    },
+    {
+      "id": "m4",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "Já recebi propostas ou pedidos de clientes de outros países.",
+      "eixo": {
+        "MERC": 1
+      }
+    },
+    {
+      "id": "m5",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "Meu produto ou serviço depende de estar perto do cliente brasileiro.",
+      "eixo": {
+        "MERC": -1,
+        "MOB": -0.5
+      }
+    },
+    {
+      "id": "m6",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "Um cliente grande me pediu para atender em outro país.",
+      "eixo": {
+        "MERC": 1,
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "m7",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "Minha marca é conhecida e valorizada sobretudo no Brasil.",
+      "eixo": {
+        "MERC": -1
+      }
+    },
+    {
+      "id": "m8",
+      "nucleo": false,
+      "bloco": "Negócio",
+      "t": "O mercado brasileiro do meu setor está saturado.",
+      "eixo": {
+        "MERC": 0.5,
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "c1",
+      "nucleo": true,
+      "bloco": "Custos",
+      "t": "Encargos trabalhistas são o maior problema de custo da empresa.",
+      "eixo": {
+        "TRAB": 1,
+        "PRIO": -0.5
+      }
+    },
+    {
+      "id": "c2",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Boa parte da produção é feita à mão ou em linha de montagem.",
+      "eixo": {
+        "TRAB": 1
+      },
+      "se": {
+        "industria": [
+          "sim",
+          "terceiro"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Uma máquina nova reduziria mais meu custo do que uma folha mais barata.",
+      "eixo": {
+        "TRAB": -1
+      }
+    },
+    {
+      "id": "c4",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Tenho dificuldade de contratar e manter gente qualificada.",
+      "eixo": {
+        "TRAB": 0.5
+      }
+    },
+    {
+      "id": "c5",
+      "nucleo": true,
+      "bloco": "Custos",
+      "t": "A conta de energia elétrica pesa muito no meu custo.",
+      "eixo": {
+        "INS": 1
+      }
+    },
+    {
+      "id": "c6",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Importo boa parte do insumo ou da matéria-prima.",
+      "eixo": {
+        "INS": 1
+      }
+    },
+    {
+      "id": "c7",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "O imposto de importação do meu insumo encarece muito o produto.",
+      "eixo": {
+        "INS": 1,
+        "PRIO": -0.5
+      },
+      "se": {
+        "industria": [
+          "sim",
+          "terceiro"
+        ]
+      }
+    },
+    {
+      "id": "c8",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Uma queda de energia de algumas horas pararia minha produção.",
+      "eixo": {
+        "INS": 0.5,
+        "RISCO": -0.5
+      },
+      "se": {
+        "industria": [
+          "sim"
+        ]
+      }
+    },
+    {
+      "id": "c9",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Frete e logística são parte relevante do preço final.",
+      "eixo": {
+        "MERC": -0.5
+      }
+    },
+    {
+      "id": "c10",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Tenho benefício fiscal estadual ou federal que perdeu valor nos últimos anos.",
+      "eixo": {
+        "PRIO": -1
+      }
+    },
+    {
+      "id": "c11",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "A reforma tributária vai aumentar a carga do meu setor.",
+      "eixo": {
+        "PRIO": -1
+      }
+    },
+    {
+      "id": "c12",
+      "nucleo": false,
+      "bloco": "Custos",
+      "t": "Meu custo cairia de verdade se a jornada semanal fosse maior.",
+      "eixo": {
+        "TRAB": 1
+      }
+    },
+    {
+      "id": "r1",
+      "nucleo": true,
+      "bloco": "Regulação",
+      "t": "Preciso de registro ou licença de agência reguladora para vender meu produto.",
+      "eixo": {
+        "REG": 1
+      }
+    },
+    {
+      "id": "r2",
+      "nucleo": false,
+      "bloco": "Regulação",
+      "t": "Cada fábrica que produz para mim precisa ser inspecionada por órgão brasileiro.",
+      "eixo": {
+        "REG": 1.5
+      },
+      "se": {
+        "setor": [
+          "farma",
+          "alimentos",
+          "agro",
+          "outro"
+        ]
+      }
+    },
+    {
+      "id": "r3",
+      "nucleo": false,
+      "bloco": "Regulação",
+      "t": "Mudar o local de produção exigiria novo registro dos produtos.",
+      "eixo": {
+        "REG": 1
+      },
+      "se": {
+        "industria": [
+          "sim",
+          "terceiro"
+        ]
+      }
+    },
+    {
+      "id": "r4",
+      "nucleo": false,
+      "bloco": "Regulação",
+      "t": "Vendo para governo ou dependo de licitação.",
+      "eixo": {
+        "REG": 1,
+        "MERC": -1
+      }
+    },
+    {
+      "id": "r5",
+      "nucleo": false,
+      "bloco": "Regulação",
+      "t": "Minha atividade exige profissional com registro em conselho no Brasil.",
+      "eixo": {
+        "REG": 1,
+        "MOB": -0.5
+      }
+    },
+    {
+      "id": "r6",
+      "nucleo": false,
+      "bloco": "Regulação",
+      "t": "Tenho processo ou passivo fiscal relevante em aberto.",
+      "eixo": {
+        "RISCO": -0.5,
+        "REG": 0.5
+      }
+    },
+    {
+      "id": "r7",
+      "nucleo": false,
+      "bloco": "Regulação",
+      "t": "Meu setor tem norma técnica ou certificação que demora anos para obter.",
+      "eixo": {
+        "REG": 1
+      }
+    },
+    {
+      "id": "p1",
+      "nucleo": true,
+      "bloco": "Vida",
+      "t": "Eu me mudaria de país nos próximos três anos.",
+      "eixo": {
+        "MOB": 1.5
+      }
+    },
+    {
+      "id": "p2",
+      "nucleo": true,
+      "bloco": "Vida",
+      "t": "Consigo tocar a empresa sem estar presente no dia a dia.",
+      "eixo": {
+        "MOB": 1,
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "p3",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Meu cônjuge apoia a mudança de país.",
+      "eixo": {
+        "MOB": 1
+      },
+      "se": {
+        "familia": [
+          "casal",
+          "filhos"
+        ]
+      }
+    },
+    {
+      "id": "p4",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Meus filhos se adaptariam bem a uma escola em outra língua.",
+      "eixo": {
+        "MOB": 1,
+        "PRIO": 0.5
+      },
+      "se": {
+        "familia": [
+          "filhos"
+        ]
+      }
+    },
+    {
+      "id": "p5",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Cuido de pais ou parentes que dependem de mim no Brasil.",
+      "eixo": {
+        "MOB": -1.5
+      }
+    },
+    {
+      "id": "p6",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Aceitaria passar mais de 183 dias por ano fora do Brasil.",
+      "eixo": {
+        "MOB": 1.5
+      }
+    },
+    {
+      "id": "p7",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Falo ou aprenderia rápido espanhol ou inglês.",
+      "eixo": {
+        "MOB": 0.5,
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "p8",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Teria um sócio ou gestor de confiança para ficar no Brasil.",
+      "eixo": {
+        "MOB": 1
+      }
+    },
+    {
+      "id": "p9",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Já morei fora do Brasil por mais de seis meses.",
+      "eixo": {
+        "MOB": 0.5,
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "p10",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Minha rede de contatos e meu prestígio só funcionam no Brasil.",
+      "eixo": {
+        "MOB": -1,
+        "MERC": -0.5
+      }
+    },
+    {
+      "id": "p11",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Topo viver numa cidade menor e com menos serviços em troca de custo menor.",
+      "eixo": {
+        "MOB": 0.5,
+        "PRIO": -0.5
+      }
+    },
+    {
+      "id": "p12",
+      "nucleo": false,
+      "bloco": "Vida",
+      "t": "Voltaria ao Brasil sem problema se não desse certo.",
+      "eixo": {
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "f1",
+      "nucleo": true,
+      "bloco": "Patrimônio",
+      "t": "Quase toda a minha renda vem do lucro da empresa brasileira.",
+      "eixo": {
+        "REND": -1.5
+      }
+    },
+    {
+      "id": "f2",
+      "nucleo": true,
+      "bloco": "Patrimônio",
+      "t": "Tenho investimentos relevantes fora do Brasil.",
+      "eixo": {
+        "REND": 1.5
+      }
+    },
+    {
+      "id": "f3",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "Penso em vender a empresa nos próximos cinco anos.",
+      "eixo": {
+        "REND": 1,
+        "MOB": 0.5
+      }
+    },
+    {
+      "id": "f4",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "Quero proteger o patrimônio da família da instabilidade brasileira.",
+      "eixo": {
+        "REND": 1,
+        "PRIO": 0.5
+      }
+    },
+    {
+      "id": "f5",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "Tenho imóveis no Brasil que pretendo manter.",
+      "eixo": {
+        "REND": -0.5
+      }
+    },
+    {
+      "id": "f6",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "Já tenho offshore ou holding no exterior.",
+      "eixo": {
+        "REND": 1
+      }
+    },
+    {
+      "id": "f7",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "A sucessão da empresa para os filhos é uma preocupação concreta.",
+      "eixo": {
+        "REND": 0.5
+      }
+    },
+    {
+      "id": "f8",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "Recebo ou receberia renda de trabalho ou consultoria pago por empresa de fora.",
+      "eixo": {
+        "REND": 1,
+        "MERC": 0.5
+      }
+    },
+    {
+      "id": "f9",
+      "nucleo": false,
+      "bloco": "Patrimônio",
+      "t": "Retiro mais de R$ 50 mil por mês da empresa.",
+      "eixo": {
+        "REND": -0.5,
+        "PRIO": -0.5
+      }
+    },
+    {
+      "id": "o1",
+      "nucleo": true,
+      "bloco": "Motivos",
+      "t": "Pagar menos imposto é o principal motivo para eu pensar em sair.",
+      "eixo": {
+        "PRIO": -1.5
+      }
+    },
+    {
+      "id": "o2",
+      "nucleo": true,
+      "bloco": "Motivos",
+      "t": "Segurança pública pesa mais que imposto na minha decisão.",
+      "eixo": {
+        "PRIO": 1.5
+      }
+    },
+    {
+      "id": "o3",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Um passaporte europeu para os filhos vale anos de esforço.",
+      "eixo": {
+        "PRIO": 1,
+        "MOB": 0.5
+      }
+    },
+    {
+      "id": "o4",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Eu ficaria no Brasil se a carga tributária caísse.",
+      "eixo": {
+        "PRIO": -1,
+        "MOB": -0.5
+      }
+    },
+    {
+      "id": "o5",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Instabilidade política e jurídica me preocupa mais que o imposto.",
+      "eixo": {
+        "PRIO": 0.5,
+        "REND": 0.5
+      }
+    },
+    {
+      "id": "o6",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Quero mais tempo de qualidade com a família, mesmo ganhando menos.",
+      "eixo": {
+        "PRIO": 1.5
+      }
+    },
+    {
+      "id": "o7",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Quero morar num lugar onde a minha língua é falada.",
+      "eixo": {
+        "PRIO": 1
+      }
+    },
+    {
+      "id": "o8",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "A burocracia brasileira me cansa mais que o imposto.",
+      "eixo": {
+        "PRIO": 0.5,
+        "RISCO": 0.5
+      }
+    },
+    {
+      "id": "o9",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Prefiro calor, praia e clima parecido com o do Brasil.",
+      "eixo": {
+        "PRIO": 0.5
+      }
+    },
+    {
+      "id": "o10",
+      "nucleo": false,
+      "bloco": "Motivos",
+      "t": "Morar perto da fronteira e vir ao Brasil toda semana é uma vantagem.",
+      "eixo": {
+        "MOB": 0.5,
+        "PRIO": -0.5
+      }
+    },
+    {
+      "id": "k1",
+      "nucleo": true,
+      "bloco": "Risco",
+      "t": "Aceito ficar dois anos com resultado pior para montar a operação fora.",
+      "eixo": {
+        "RISCO": 1.5
+      }
+    },
+    {
+      "id": "k2",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Prefiro um ganho menor e previsível a um ganho maior e incerto.",
+      "eixo": {
+        "RISCO": -1.5
+      }
+    },
+    {
+      "id": "k3",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Confio em gerir equipe em outro país, com outra lei trabalhista.",
+      "eixo": {
+        "RISCO": 1
+      }
+    },
+    {
+      "id": "k4",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Uma mudança de regra no país de destino me faria desistir.",
+      "eixo": {
+        "RISCO": -1
+      }
+    },
+    {
+      "id": "k5",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Já abri empresa ou filial do zero mais de uma vez.",
+      "eixo": {
+        "RISCO": 1
+      }
+    },
+    {
+      "id": "k6",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Só me mexo com parecer de contador e advogado nos dois países.",
+      "eixo": {
+        "RISCO": -0.5
+      }
+    },
+    {
+      "id": "k7",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Pagaria consultoria para fazer tudo por mim.",
+      "eixo": {
+        "RISCO": -0.5
+      }
+    },
+    {
+      "id": "k8",
+      "nucleo": false,
+      "bloco": "Risco",
+      "t": "Câmbio e conta em dólar me deixam desconfortável.",
+      "eixo": {
+        "RISCO": -1,
+        "REND": -0.5
+      }
+    }
+  ],
+  "caminhos": [
+    {
+      "id": "ficar",
+      "nome": "Ficar e reorganizar no Brasil",
+      "ideal": {
+        "MERC": -1,
+        "MOB": -2,
+        "REND": -1,
+        "RISCO": -1
+      },
+      "modelos": [],
+      "destinos": [
+        "Brasil"
+      ],
+      "texto": "A conta não melhora saindo. O ganho está em revisar regime, pró-labore, holding e sucessão aqui.",
+      "dossie": "pais-brasil"
+    },
+    {
+      "id": "maquila",
+      "nome": "Fábrica no Paraguai, dono fica no Brasil",
+      "ideal": {
+        "TRAB": 2,
+        "INS": 1.5,
+        "REG": -1,
+        "MOB": -1,
+        "RISCO": 0.5
+      },
+      "requer": {
+        "industria": [
+          "sim",
+          "terceiro"
+        ]
+      },
+      "modelos": [
+        "fabrica_dono_fica",
+        "terceirizacao"
+      ],
+      "destinos": [
+        "Paraguai"
+      ],
+      "texto": "É o modelo dos casos industriais da base. A empresa ganha em folha, energia e insumo. O dono continua residente no Brasil e o dividendo segue a regra brasileira. Desde a quebra do Ueno Bank (novembro de 2026), divida o caixa entre bancos: a garantia de depósitos cobre só cerca de US$ 38 mil por banco.",
+      "dossie": "pais-paraguai"
+    },
+    {
+      "id": "dono_py",
+      "nome": "Dono se muda para o Paraguai",
+      "ideal": {
+        "MOB": 2,
+        "REND": 1,
+        "PRIO": -1.5,
+        "RISCO": 1
+      },
+      "modelos": [
+        "dono_muda"
+      ],
+      "destinos": [
+        "Paraguai"
+      ],
+      "texto": "Faz sentido para renda de fora do Brasil ou para quem toca operação lá. Para dividendo de empresa brasileira, a retenção de 10% na fonte pode empatar ou superar o IR mínimo de quem fica. Desde a quebra do Ueno Bank (novembro de 2026), divida o caixa entre bancos: a garantia de depósitos cobre só cerca de US$ 38 mil por banco.",
+      "dossie": "pais-paraguai"
+    },
+    {
+      "id": "filial_ext",
+      "nome": "Filial para vender em outro mercado",
+      "ideal": {
+        "MERC": 2,
+        "RISCO": 1,
+        "MOB": 0
+      },
+      "modelos": [
+        "filial_mercado_externo",
+        "filial_cliente",
+        "filial_mercado_local"
+      ],
+      "destinos": [
+        "Portugal",
+        "EUA",
+        "Paraguai"
+      ],
+      "texto": "A empresa vai atrás do cliente. Imposto é consequência, não motivo.",
+      "dossie": "destinos"
+    },
+    {
+      "id": "vida_europa",
+      "nome": "Mudança de vida para a Europa",
+      "ideal": {
+        "MOB": 2,
+        "PRIO": 2,
+        "RISCO": 0.5
+      },
+      "modelos": [
+        "mudanca_vida"
+      ],
+      "destinos": [
+        "Portugal",
+        "Espanha",
+        "Itália"
+      ],
+      "texto": "Segurança, escola e passaporte. A conta fiscal costuma piorar e os relatos de volta são frequentes.",
+      "dossie": "pais-portugal"
+    },
+    {
+      "id": "eua",
+      "nome": "Negócio e residência nos EUA",
+      "ideal": {
+        "MERC": 1,
+        "MOB": 2,
+        "PRIO": 1,
+        "RISCO": 1.5
+      },
+      "modelos": [
+        "filial_mercado_externo",
+        "mudanca_vida"
+      ],
+      "destinos": [
+        "EUA"
+      ],
+      "texto": "Exige capital (E-2 ou EB-5) e operação real lá. Imposto americano não é baixo.",
+      "dossie": "pais-eua"
+    },
+    {
+      "id": "patrimonio",
+      "nome": "Residência fiscal para renda e patrimônio de fora",
+      "ideal": {
+        "REND": 2,
+        "MOB": 2,
+        "PRIO": -1
+      },
+      "modelos": [],
+      "destinos": [
+        "Uruguai",
+        "Emirados",
+        "Paraguai"
+      ],
+      "texto": "Só faz sentido com renda relevante de fora do Brasil e mudança real. Uruguai mudou o regime em 2026: conferir.",
+      "dossie": "pais-uruguai"
+    }
+  ],
+  "regras": [
+    {
+      "id": "v1",
+      "tipo": "veto",
+      "se": "industria == 'nao' && setor in ['varejo','servicos']",
+      "caminho": "maquila",
+      "texto": "A maquila exige produção para exportar e proíbe vender no mercado paraguaio. Para comércio e serviço local ela não serve. A reforma de 2025 incluiu serviços, mas só para exportação."
+    },
+    {
+      "id": "v2",
+      "tipo": "alerta",
+      "se": "setor == 'farma' || REG >= 1",
+      "caminho": "maquila",
+      "texto": "Seu negócio é regulado. Para vender no Brasil o que for produzido fora, a fábrica precisa de certificação da agência brasileira (no caso de medicamento, Certificação de Boas Práticas de Fabricação da Anvisa, por planta, com inspeção) e o produto precisa de registro. Comece o estudo pela regulação."
+    },
+    {
+      "id": "v3",
+      "tipo": "alerta",
+      "se": "dividendos > 0 && MOB >= 1 && REND < 0",
+      "caminho": "dono_py",
+      "texto": "Sua renda vem do lucro da empresa brasileira. Saindo, você paga 10% retido na fonte; ficando, paga o IR mínimo de 0% a 10%. Rode o simulador antes de qualquer passo."
+    },
+    {
+      "id": "v4",
+      "tipo": "veto",
+      "se": "familia == 'ninguem'",
+      "caminho": "dono_py,vida_europa,eua,patrimonio",
+      "texto": "Sem mudança real de vida não há saída fiscal. Morar fora no papel é o caso que a Receita autua."
+    },
+    {
+      "id": "v5",
+      "tipo": "alerta",
+      "se": "regime == 'simples'",
+      "caminho": "maquila",
+      "texto": "No Simples a carga já é baixa. O ganho da maquila vem mais de folha e energia do que de imposto."
+    },
+    {
+      "id": "v6",
+      "tipo": "alerta",
+      "se": "capital == '100'",
+      "caminho": "eua",
+      "texto": "Os vistos de investidor americanos pedem aporte acima de US$ 100 mil (E-2) ou US$ 800 mil (EB-5)."
+    },
+    {
+      "id": "v7",
+      "tipo": "reforco",
+      "se": "cidadania == 'ue'",
+      "caminho": "vida_europa",
+      "texto": "Cidadania europeia elimina a parte mais difícil da mudança para a Europa: o visto."
+    },
+    {
+      "id": "v8",
+      "tipo": "reforco",
+      "se": "cidadania == 'ue'",
+      "caminho": "eua",
+      "texto": "Cidadania de país com tratado (Itália, Espanha, Portugal) abre o visto E-2."
+    }
+  ]
+}

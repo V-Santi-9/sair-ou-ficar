@@ -1,0 +1,824 @@
+{
+  "consulta": "5 de novembro de 2026",
+  "aviso_casos": "Os casos vêm de reportagens e de falas das próprias empresas. Não são auditoria de resultado. Quase nenhuma empresa divulga quanto ganhou de fato; quando há número, ele está aqui com a fonte. Nenhuma das empresas industriais listadas fechou a operação no Brasil: abriram uma unidade a mais.",
+  "agregados": [
+    {
+      "id": "a1",
+      "rotulo": "Empresas maquiladoras de capital brasileiro",
+      "valor": "231 de 339",
+      "detalhe": "68,1% das maquiladoras ativas em 31 de dezembro de 2025.",
+      "fonte": "Gazeta do Povo, 30/07/2026, com dados do governo paraguaio",
+      "u": "https://www.gazetadopovo.com.br/economia/empresas-brasileiras-paraguai-impostos-havan-lupo/",
+      "conf": "imprensa"
+    },
+    {
+      "id": "a2",
+      "rotulo": "Maquiladoras brasileiras por setor",
+      "valor": "89 confecção e tecidos, 47 plásticos, 30 alumínio",
+      "detalhe": "Base de 232 empresas brasileiras desde 2007. Os demais setores não foram detalhados na reportagem.",
+      "fonte": "ConJur, 26/05/2026, citando Poder360",
+      "u": "https://conjur.com.br/2026-mai-26/menos-impostos-e-energia-barata-levam-industrias-brasileiras-ao-paraguai/",
+      "conf": "imprensa"
+    },
+    {
+      "id": "a3",
+      "rotulo": "Destino da produção das maquilas",
+      "valor": "64% a 67% vai para o Brasil",
+      "detalhe": "A maior parte fica no Alto Paraná, a até 50 km da fronteira. O produto entra no Brasil sem Imposto de Importação, mas paga ICMS.",
+      "fonte": "ConJur, 26/05/2026; Jornal de Brasília (CNIME, 1º bimestre de 2026)",
+      "u": "https://conjur.com.br/2026-mai-26/menos-impostos-e-energia-barata-levam-industrias-brasileiras-ao-paraguai/",
+      "conf": "imprensa"
+    },
+    {
+      "id": "a4",
+      "rotulo": "Energia industrial",
+      "valor": "US$ 41/MWh no Paraguai x US$ 113/MWh no Brasil",
+      "detalhe": "Média citada pela Rediex, do Ministério da Indústria e Comércio do Paraguai. Empresas relatam investir em gerador ou subestação para contornar falhas de fornecimento.",
+      "fonte": "Gazeta do Povo, 30/07/2026",
+      "u": "https://www.gazetadopovo.com.br/economia/empresas-brasileiras-paraguai-impostos-havan-lupo/",
+      "conf": "imprensa"
+    },
+    {
+      "id": "a5",
+      "rotulo": "Encargos sobre a folha",
+      "valor": "25% a 35% do salário no Paraguai x 60% a mais de 100% no Brasil",
+      "detalhe": "Contribuição patronal de 16,5% (IPS) contra 20% (INSS), sem FGTS e sem Sistema S. Jornada de 48 horas semanais contra 44. O salário mínimo paraguaio é nominalmente maior.",
+      "fonte": "Gazeta do Povo, 30/07/2026; Forbes Brasil, 19/06/2026",
+      "u": "https://www.gazetadopovo.com.br/economia/empresas-brasileiras-paraguai-impostos-havan-lupo/",
+      "conf": "imprensa"
+    },
+    {
+      "id": "a6",
+      "rotulo": "Custo e prazo para abrir uma maquila",
+      "valor": "cerca de 60 dias",
+      "detalhe": "Cédula paraguaia de cada sócio ou representante: cerca de R$ 10 mil (mínimo de duas pessoas). Constituição da empresa: cerca de R$ 2,5 mil. Aprovação do programa de maquila: cerca de R$ 37 mil e 60 dias. Valores de consultoria, não oficiais.",
+      "fonte": "Forbes Brasil, 19/06/2026",
+      "u": "https://forbes.com.br/forbes-money/2026/06/empresas-brasileiras-paraguai-lei-de-maquila/",
+      "conf": "imprensa"
+    },
+    {
+      "id": "a7",
+      "rotulo": "Exportações das maquilas",
+      "valor": "US$ 1,26 bilhão em 2025",
+      "detalhe": "Recorde. No 1º semestre de 2026, US$ 717 milhões, alta de 25%.",
+      "fonte": "Poder360; Mirian Gasparin, 08/2026",
+      "u": "https://www.poder360.com.br/poder-economia/mais-de-230-empresas-brasileiras-ja-produzem-no-paraguai/",
+      "conf": "imprensa"
+    }
+  ],
+  "setores": [
+    {
+      "id": "textil",
+      "nome": "Têxtil e confecção",
+      "presenca": "Maior grupo: 89 das 232 maquiladoras brasileiras.",
+      "por_que_vai": "Mão de obra intensiva; encargos e tributos pesam muito no custo da peça. Concorrência com importados asiáticos.",
+      "o_que_trava": "Setor muito competitivo; parte das marcas usa facção paraguaia em vez de fábrica própria.",
+      "casos": [
+        "c1",
+        "c2",
+        "c3",
+        "c14"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "calcados",
+      "nome": "Calçados",
+      "presenca": "Casos citados, sem contagem setorial.",
+      "por_que_vai": "Mão de obra intensiva.",
+      "o_que_trava": "Linhas de calçado são difíceis de transferir: a Dass disse que é inviável mover maquinário de calçados para a planta paraguaia.",
+      "casos": [
+        "c4",
+        "c2"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "plastico",
+      "nome": "Plásticos e embalagens",
+      "presenca": "47 das 232 maquiladoras brasileiras.",
+      "por_que_vai": "Energia e encargos menores; insumo importado sem imposto de importação.",
+      "o_que_trava": "Produto paga ICMS ao entrar no Brasil.",
+      "casos": [
+        "c5",
+        "c19"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "metal",
+      "nome": "Alumínio, metalurgia e esquadrias",
+      "presenca": "30 das 232 maquiladoras brasileiras são de alumínio.",
+      "por_que_vai": "Energia mais barata e insumo importado da China sem imposto.",
+      "o_que_trava": "Operação depende de energia estável: há relatos de investimento em gerador ou subestação.",
+      "casos": [
+        "c5",
+        "c7"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "autopecas",
+      "nome": "Autopeças e componentes elétricos",
+      "presenca": "Citado entre os setores que mais usam a maquila. A Yazaki (japonesa) está entre as maiores exportadoras.",
+      "por_que_vai": "Montagem intensiva em mão de obra para a cadeia automotiva brasileira.",
+      "o_que_trava": "Sem caso brasileiro detalhado na nossa base.",
+      "casos": [],
+      "conf": "imprensa"
+    },
+    {
+      "id": "alimentos",
+      "nome": "Alimentos, frigoríficos e laticínios",
+      "presenca": "Casos grandes, quase sempre no regime geral (não maquila), para atender o mercado paraguaio e exportar.",
+      "por_que_vai": "Matéria-prima local, energia e o regime 10-10-10.",
+      "o_que_trava": "Registro sanitário de cada mercado de destino.",
+      "casos": [
+        "c10",
+        "c11"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "farma",
+      "nome": "Farmacêutico, saúde e dispositivos médicos",
+      "presenca": "A indústria farmacêutica paraguaia exporta perto de US$ 100 milhões por ano, e cerca de US$ 50 milhões saem pela maquila. Segundo a ALIFAR, a maquila é hoje a única via de entrada de medicamento feito no Paraguai no Brasil e na Argentina, porque os produtos paraguaios não obtiveram registro direto nesses países. Não achamos farmacêutica de capital brasileiro com fábrica no Paraguai. Em dispositivos e insumos médicos há um caso com operação no Brasil e no Paraguai desde 2011 (SR Productos para la Salud) e uma missão de mais de 30 representantes da ABIMO em março de 2026.",
+      "por_que_vai": "Os mesmos atrativos da maquila: encargos, energia e imposto de 1% sobre o valor agregado. O Paraguai importa 95% dos dispositivos médicos que usa, e o governo quer produção local.",
+      "o_que_trava": "Para vender no Brasil, cada fábrica precisa de Certificação de Boas Práticas de Fabricação da Anvisa, com inspeção, e cada produto precisa de registro. Remédio paraguaio sem registro na Anvisa é contrabando ao cruzar a fronteira, como mostrou o caso das canetas de tirzepatida em 2026. O modelo que funciona hoje é fabricar no Paraguai para uma empresa que já tem o registro no Brasil (maquila por encomenda), não levar a farmacêutica inteira.",
+      "casos": [
+        "c17",
+        "c18",
+        "c9"
+      ],
+      "numeros": [
+        {
+          "rotulo": "Exportação farmacêutica do Paraguai",
+          "valor": "perto de US$ 100 milhões por ano, metade pela maquila",
+          "fonte": "1000 Noticias, 20/10/2026, entrevista com Gerardo García (ALIFAR)",
+          "u": "https://1000noticias.com.py/2026/10/20/farmaceuticas-paraguayas-casi-usd-100-millones-en-exportaciones-y-apuntan-a-los-biologicos/",
+          "conf": "imprensa"
+        },
+        {
+          "rotulo": "Exportação farmacêutica esperada para 2025",
+          "valor": "US$ 90 milhões (US$ 78 milhões em 2024)",
+          "fonte": "ABC Color, 27/10/2025, com a Cifarma",
+          "u": "https://www.abc.com.py/economia/2025/10/27/exportaciones-farmaceuticas-apuntan-a-us-90-millones-y-buscan-nuevos-mercados/",
+          "conf": "imprensa"
+        },
+        {
+          "rotulo": "Dispositivos médicos importados pelo Paraguai",
+          "valor": "95%",
+          "fonte": "Rediex/MIC, via reportagem",
+          "u": "https://www.rediex.gov.py/empresarios-brasilenos-del-sector-medico-destacan-oportunidades-de-inversion-en-paraguay/",
+          "conf": "oficial"
+        }
+      ],
+      "citacoes": [
+        {
+          "t": "Se está fabricando a nivel país y se está enviando a las empresas que tienen representación en los distintos países.",
+          "quem": "Gerardo García, presidente da ALIFAR",
+          "fonte": "1000 Noticias, 20/10/2026",
+          "u": "https://1000noticias.com.py/2026/10/20/farmaceuticas-paraguayas-casi-usd-100-millones-en-exportaciones-y-apuntan-a-los-biologicos/"
+        }
+      ],
+      "fontes_extra": [
+        {
+          "t": "Anvisa: canetas do Paraguai não demonstraram equivalência",
+          "u": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/canetas-do-paraguai-nao-demonstraram-equivalencia-com-medicamentos-registrados-no-brasil",
+          "conf": "oficial"
+        },
+        {
+          "t": "Infonegocios (PY), 01/04/2025: Aché chega ao Paraguai pela Bioethic Pharma",
+          "u": "https://infonegocios.com.py/minuto-salud/el-lider-farmaceutico-de-brasil-laboratorios-ache-llega-con-bioethic-pharma-con-productos-cardiologicos-y-cardiometabolicos",
+          "conf": "imprensa"
+        },
+        {
+          "t": "UIP, 01/07/2025: rodada de negócios com fabricantes brasileiros de dispositivos médicos (ABIMO)",
+          "u": "https://uip.org.py/2025/07/01/empresarios-del-sector-salud-se-preparan-para-una-rueda-de-negocios-con-fabricantes-brasilenos-de-dispositivos-medicos/",
+          "conf": "imprensa"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "logistica",
+      "nome": "Transporte e logística",
+      "presenca": "Casos de empresas que seguiram clientes.",
+      "por_que_vai": "Proximidade de clientes e regras trabalhistas mais simples.",
+      "o_que_trava": "Serviço não tinha o incentivo industrial; a reforma de 2025 da maquila passou a incluir serviços, só para exportação.",
+      "casos": [
+        "c6",
+        "r7",
+        "r9"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "varejo",
+      "nome": "Varejo e comércio",
+      "presenca": "Movimentos para vender ao consumidor paraguaio.",
+      "por_que_vai": "Mercado em crescimento e imposto de 10%.",
+      "o_que_trava": "Maquila não serve: ela proíbe vender no mercado interno paraguaio. Vale o regime geral.",
+      "casos": [
+        "c13",
+        "r15"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "tecnologia",
+      "nome": "Tecnologia e software",
+      "presenca": "Startups brasileiras incubadas em Portugal; programa ApexBrasil e Sebrae em Lisboa.",
+      "por_que_vai": "Mercado europeu, rodadas de investimento, talento.",
+      "o_que_trava": "Custo de equipe e de vida na Europa; quem continua com cliente brasileiro não ganha em imposto.",
+      "casos": [
+        "c15",
+        "r10",
+        "r14"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "servicos",
+      "nome": "Serviços profissionais e pequenos negócios",
+      "presenca": "A maioria dos relatos individuais em Portugal.",
+      "por_que_vai": "Mudança de vida, segurança, passaporte.",
+      "o_que_trava": "Mercado menor, renda em euro mais baixa que o esperado; vários relatos de volta.",
+      "casos": [
+        "r8",
+        "r11",
+        "r12"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "agro",
+      "nome": "Agronegócio e terra",
+      "presenca": "Brasileiros compram terra no Paraguai há décadas; o foco recente é o Chaco.",
+      "por_que_vai": "Terra mais barata.",
+      "o_que_trava": "Clima, infraestrutura do Chaco e preço da soja (cerca de US$ 140/t em julho de 2026).",
+      "casos": [
+        "c16"
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "outro",
+      "nome": "Outro setor",
+      "presenca": "Sem casos específicos na base.",
+      "por_que_vai": "",
+      "o_que_trava": "",
+      "casos": [],
+      "conf": "imprensa"
+    }
+  ],
+  "casos": [
+    {
+      "id": "c1",
+      "empresa": "Lupo",
+      "setor": "textil",
+      "origem": "Araraquara (SP)",
+      "destino": "Paraguai",
+      "cidade": "Ciudad del Este",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Maquila",
+      "quando": "junho de 2025",
+      "porte": "grande",
+      "investimento": "R$ 30 milhões",
+      "empregos": "110 a 130 no início; meta de 350 no 1º trimestre de 2026",
+      "motivo": "Impostos. A Lei 14.789/2023 elevou o custo dos incentivos fiscais usados pela indústria.",
+      "mudanca_valor": "Custos pelo menos 28% menores que no Brasil, segundo a empresa. Capacidade de 20 milhões de pares de meias por ano; 600 mil pares exportados no primeiro ciclo.",
+      "desafios": "Manteve as fábricas no Brasil; a ideia de que a Lupo saiu do Brasil é falsa (Aos Fatos).",
+      "citacao": "Não é que a Lupo foi para o Paraguai, o Brasil empurrou a gente para o Paraguai.",
+      "quem_disse": "Liliana Aufiero, então CEO",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Revista Oeste",
+          "u": "https://www.revistaoeste.com/economia/o-brasil-empurrou-a-gente-para-o-paraguai-diz-ceo-da-lupo/"
+        },
+        {
+          "t": "La Nación (PY), 01/01/2026",
+          "u": "https://www.lanacion.com.py/negocios/2026/01/01/lupo-consolida-su-expansion-internacional-desde-paraguay-y-exporta-600-mil-pares-de-medias/"
+        },
+        {
+          "t": "Aos Fatos",
+          "u": "https://www.aosfatos.org/noticias/lupo-brasil-paraguai/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c2",
+      "empresa": "Grupo Dass (Dasstex, com Texcin)",
+      "setor": "textil",
+      "origem": "Santa Catarina",
+      "destino": "Paraguai",
+      "cidade": "Grande Assunção",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Maquila, em parceria com fabricante local",
+      "quando": "2025 a 2026",
+      "porte": "grande",
+      "investimento": "cerca de US$ 40 milhões",
+      "empregos": "mais de 600 previstos",
+      "motivo": "Custo de produção de confecção esportiva.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "A empresa disse ser inviável levar linhas de calçado para o Paraguai e que não fecha unidades no Brasil nem na Argentina.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Poder360",
+          "u": "https://www.poder360.com.br/poder-economia/dass-diz-que-nao-vai-trocar-brasil-e-argentina-pelo-paraguai/"
+        },
+        {
+          "t": "Hoy (PY), 18/05/2026",
+          "u": "https://www.hoy.com.py/negocios/comercio-e-industrias/2026/05/18/representante-de-reconocidas-marcas-deportivas-instala-su-fabrica-en-paraguay"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c3",
+      "empresa": "Riachuelo (Guararapes), Renner e C&A com facções paraguaias",
+      "setor": "textil",
+      "origem": "",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "terceirizacao",
+      "regime": "Maquila de terceiros (Texcin, Hoahi)",
+      "quando": "desde 2014",
+      "porte": "grande",
+      "investimento": "US$ 5 a 10 milhões no projeto inicial com a Texcin (fontes divergem)",
+      "empregos": "",
+      "motivo": "Produzir perto do Brasil em vez de importar da Ásia.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "Modelo sem fábrica própria: o risco fica com o fornecedor paraguaio.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "ConJur, 26/05/2026",
+          "u": "https://conjur.com.br/2026-mai-26/menos-impostos-e-energia-barata-levam-industrias-brasileiras-ao-paraguai/"
+        }
+      ],
+      "conf": "conferir"
+    },
+    {
+      "id": "c4",
+      "empresa": "Kidy Calçados",
+      "setor": "calcados",
+      "origem": "Birigui (SP)",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Maquila (pedido protocolado)",
+      "quando": "2025 a 2026",
+      "porte": "medio_grande",
+      "investimento": "não divulgado",
+      "empregos": "cerca de 2 mil no Brasil (2024)",
+      "motivo": "Impostos e encargos menores.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "As fontes divergem sobre se a unidade já opera.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_implantacao",
+      "fontes": [
+        {
+          "t": "Poder360",
+          "u": "https://www.poder360.com.br/poder-economia/mais-de-230-empresas-brasileiras-ja-produzem-no-paraguai/"
+        }
+      ],
+      "conf": "conferir"
+    },
+    {
+      "id": "c5",
+      "empresa": "Wyda Embalagens",
+      "setor": "plastico",
+      "origem": "",
+      "destino": "Paraguai",
+      "cidade": "Assunção",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Unidade industrial",
+      "quando": "2019",
+      "porte": "medio_grande",
+      "investimento": "não divulgado",
+      "empregos": "",
+      "motivo": "Diversificar insumo e operar num ambiente menos burocrático.",
+      "mudanca_valor": "A planta responde por cerca de 10% do volume de bobinas de alumínio do grupo e atende só o mercado brasileiro.",
+      "desafios": "O produto paga os tributos brasileiros ao chegar ao cliente. A empresa diz que a vantagem é mão de obra, agilidade e escala, não benefício fiscal.",
+      "citacao": "A nossa competitividade está em custos relacionados à mão de obra.",
+      "quem_disse": "Roberto Carvalho, diretor executivo",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Forbes Brasil, 19/06/2026",
+          "u": "https://forbes.com.br/forbes-money/2026/06/empresas-brasileiras-paraguai-lei-de-maquila/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c6",
+      "empresa": "Fadel Transportes",
+      "setor": "logistica",
+      "origem": "",
+      "destino": "Paraguai",
+      "cidade": "Assunção, Ciudad del Este, Coronel Oviedo, Encarnación e Ipané",
+      "modelo": "filial_cliente",
+      "regime": "Regime geral (serviço, sem incentivo industrial)",
+      "quando": "2019",
+      "porte": "medio_grande",
+      "investimento": "US$ 8 mil para abrir; R$ 32 milhões em frota",
+      "empregos": "mais de 420 locais",
+      "motivo": "Seguiu o cliente principal (Ambev, dona da Cervepar).",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "Como prestadora de serviço, não tinha os incentivos da indústria.",
+      "citacao": "As regras trabalhistas no Paraguai são bem mais simples do que as brasileiras.",
+      "quem_disse": "Renato Fonseca, diretor financeiro",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Forbes Brasil, 19/06/2026",
+          "u": "https://forbes.com.br/forbes-money/2026/06/empresas-brasileiras-paraguai-lei-de-maquila/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c7",
+      "empresa": "Jonathan Linzmeyer (esquadrias de alumínio e vidro)",
+      "setor": "metal",
+      "origem": "São Bento do Sul (SC)",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "dono_muda",
+      "regime": "Unidade industrial; dono mora no Paraguai",
+      "quando": "antes de 2026",
+      "porte": "pequeno_medio",
+      "investimento": "não divulgado",
+      "empregos": "",
+      "motivo": "Impostos e estabilidade econômica.",
+      "mudanca_valor": "Diz importar alumínio da China cerca de 70% mais barato e sem imposto de importação, e exportar para o Brasil.",
+      "desafios": "Teve de se mudar para administrar a fábrica.",
+      "citacao": "Lá, eu consigo importar da China 70% mais barato e zero de imposto.",
+      "quem_disse": "Jonathan Linzmeyer",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Gazeta do Povo, 21/02/2026",
+          "u": "https://www.gazetadopovo.com.br/brasil/industria-brasileira-cruza-fronteira-paraguai-menos-impostos/"
+        },
+        {
+          "t": "Abrazpe, 24/05/2026 (republica Poder360)",
+          "u": "https://www.abrazpe.org.br/index.php/2026/05/24/imposto-menor-faz-empresario-ter-lucro-150-maior-no-paraguai/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c8",
+      "empresa": "Fabrizio Gudin",
+      "setor": "outro",
+      "origem": "Matão (SP)",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "dono_muda",
+      "regime": "Empresa no Paraguai",
+      "quando": "2026",
+      "porte": "pequeno_medio",
+      "investimento": "não divulgado",
+      "empregos": "",
+      "motivo": "Menor tributação; mercado saturado no Brasil.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "",
+      "citacao": "No Paraguai se trabalha um mês e meio por ano para pagar impostos. No Brasil são seis meses.",
+      "quem_disse": "Fabrizio Gudin",
+      "resultado": "em_implantacao",
+      "fontes": [
+        {
+          "t": "Gazeta do Povo, 21/02/2026",
+          "u": "https://www.gazetadopovo.com.br/brasil/industria-brasileira-cruza-fronteira-paraguai-menos-impostos/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c9",
+      "empresa": "Blink Bioscience",
+      "setor": "farma",
+      "origem": "",
+      "destino": "Paraguai",
+      "cidade": "Hernandarias",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Unidade industrial exportadora",
+      "quando": "primeira exportação em março de 2024",
+      "porte": "medio_grande",
+      "investimento": "US$ 15 milhões",
+      "empregos": "",
+      "motivo": "Plataforma de exportação, energia e incentivos fiscais.",
+      "mudanca_valor": "Não divulgada. Exporta minerais orgânicos para nutrição animal ao Panamá, Chile e Peru.",
+      "desafios": "Não é medicamento humano: o caminho regulatório é mais leve que o de uma farmacêutica.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Compre Rural",
+          "u": "https://comprerural.com/blink-bioscience-inaugura-nova-fabrica-no-paraguai/"
+        },
+        {
+          "t": "La Nación (PY), 22/03/2024",
+          "u": "https://www.lanacion.com.py/negocios/2024/03/22/paraguay-se-consolida-como-actor-clave-con-exportacion-de-minerales-organicos/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c10",
+      "empresa": "JBS",
+      "setor": "alimentos",
+      "origem": "São Paulo (SP)",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Regime geral (não maquila)",
+      "quando": "anunciado em outubro de 2025",
+      "porte": "grande",
+      "investimento": "US$ 70 milhões em dois anos",
+      "empregos": "",
+      "motivo": "Volta ao país depois de oito anos fora.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "Já tinha saído do Paraguai uma vez.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_implantacao",
+      "fontes": [
+        {
+          "t": "Gazeta do Povo, 30/07/2026",
+          "u": "https://www.gazetadopovo.com.br/economia/empresas-brasileiras-paraguai-impostos-havan-lupo/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c11",
+      "empresa": "Laticínios Jussara",
+      "setor": "alimentos",
+      "origem": "Patrocínio Paulista (SP)",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Maquila (em análise)",
+      "quando": "julho de 2026, em estudo",
+      "porte": "medio_grande",
+      "investimento": "US$ 10 milhões (planta em análise)",
+      "empregos": "",
+      "motivo": "Custos do regime de maquila.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "Decisão não tomada.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "estudando",
+      "fontes": [
+        {
+          "t": "La Nación (PY), 16/07/2026",
+          "u": "https://www.lanacion.com.py/negocios_edicion_impresa/2026/07/16/gigante-lacteo-brasileno-jussara-analiza-instalar-una-planta-en-paraguay/"
+        }
+      ],
+      "conf": "conferir"
+    },
+    {
+      "id": "c13",
+      "empresa": "Havan",
+      "setor": "varejo",
+      "origem": "Brusque (SC)",
+      "destino": "Paraguai",
+      "cidade": "Grande Assunção",
+      "modelo": "filial_mercado_local",
+      "regime": "Regime geral",
+      "quando": "em estudo desde julho de 2026",
+      "porte": "grande",
+      "investimento": "não divulgado",
+      "empregos": "",
+      "motivo": "Imposto baixo e liberdade econômica, segundo o dono.",
+      "mudanca_valor": "Não se aplica: seria a primeira loja fora do Brasil.",
+      "desafios": "Maquila não serve para varejo, que vende no mercado interno.",
+      "citacao": "O Paraguai vive um momento de grande transformação.",
+      "quem_disse": "Luciano Hang",
+      "resultado": "estudando",
+      "fontes": [
+        {
+          "t": "Gazeta do Povo, 30/07/2026",
+          "u": "https://www.gazetadopovo.com.br/economia/empresas-brasileiras-paraguai-impostos-havan-lupo/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c14",
+      "empresa": "Karsten",
+      "setor": "textil",
+      "origem": "Blumenau (SC)",
+      "destino": "Paraguai",
+      "cidade": "",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Regime geral (não maquila), segundo o ConJur",
+      "quando": "2025 a 2026",
+      "porte": "grande",
+      "investimento": "não divulgado",
+      "empregos": "",
+      "motivo": "Custo de produção.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "ConJur, 26/05/2026",
+          "u": "https://conjur.com.br/2026-mai-26/menos-impostos-e-energia-barata-levam-industrias-brasileiras-ao-paraguai/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c15",
+      "empresa": "Startups brasileiras incubadas em Lisboa (ApexBrasil e Sebrae)",
+      "setor": "tecnologia",
+      "origem": "várias",
+      "destino": "Portugal",
+      "cidade": "Lisboa",
+      "modelo": "filial_mercado_externo",
+      "regime": "Empresa portuguesa, programa público de incubação",
+      "quando": "março a novembro de 2026 (10 startups); 20 no ciclo de 2027",
+      "porte": "pequeno_medio",
+      "investimento": "",
+      "empregos": "",
+      "motivo": "Entrar no mercado europeu.",
+      "mudanca_valor": "Não se aplica.",
+      "desafios": "Programa recente, sem resultado publicado.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "DN Brasil",
+          "u": "https://dnbrasil.dn.pt/negcios-br/apexbrasil-e-sebrae-selecionam-20-startups-brasileiras-para-incubao-em-lisboa"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c16",
+      "empresa": "Produtores brasileiros no Chaco paraguaio",
+      "setor": "agro",
+      "origem": "várias",
+      "destino": "Paraguai",
+      "cidade": "Chaco",
+      "modelo": "terra",
+      "regime": "Pessoa física ou empresa agrícola",
+      "quando": "2024 a 2026",
+      "porte": "varia",
+      "investimento": "Um negócio citado: 921 hectares por US$ 1,5 milhão (cerca de US$ 3 mil por hectare)",
+      "empregos": "",
+      "motivo": "Terra mais barata que no Brasil.",
+      "mudanca_valor": "Um único negócio, não média de mercado. Produtividade citada de até 4 t/ha somando safra e safrinha, contra média brasileira de 3,7 t/ha (Conab, 2025/26).",
+      "desafios": "Infraestrutura do Chaco e preço da soja.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "AgFeed",
+          "u": "https://agfeed.com.br/negocios/os-novos-brasiguaios-paraguai-atrai-onda-de-brasileiros-em-busca-de-terras-agricolas-baratas"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c17",
+      "empresa": "SR Productos para la Salud",
+      "setor": "farma",
+      "origem": "Unidade também em Manaus (AM) e centros de distribuição em Ponta Porã (MS)",
+      "destino": "Paraguai",
+      "cidade": "Pedro Juan Caballero",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Maquila, uma das primeiras do departamento de Amambay",
+      "quando": "desde 2011",
+      "porte": "medio_grande",
+      "investimento": "não divulgado; mais de 50 mil m² construídos somando Manaus e Pedro Juan Caballero",
+      "empregos": "não divulgado",
+      "motivo": "Produção de insumos médicos para o mercado paraguaio e regional, na fronteira com Ponta Porã.",
+      "mudanca_valor": "Não divulgada. Vende também ao Ministério da Saúde paraguaio por licitação.",
+      "desafios": "Origem do capital não declarada na reportagem oficial: conferir.",
+      "citacao": "Este fue un sueño para mí y para mi país. Tenemos que luchar juntos para desarrollar nuestro Paraguay.",
+      "quem_disse": "Felipe Saldanha, diretor da SR",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Rediex (governo do Paraguai), 30/03/2026",
+          "u": "https://www.rediex.gov.py/empresarios-brasilenos-del-sector-medico-destacan-oportunidades-de-inversion-en-paraguay/"
+        }
+      ],
+      "conf": "conferir"
+    },
+    {
+      "id": "c18",
+      "empresa": "Adium Paraguay (antiga Fapasa)",
+      "setor": "farma",
+      "origem": "Grupo farmacêutico latino-americano, com referências argentinas; não é brasileiro",
+      "destino": "Paraguai",
+      "cidade": "Grande Assunção",
+      "modelo": "contexto",
+      "regime": "Maquila para chegar ao Brasil",
+      "quando": "ampliação inaugurada em março de 2026",
+      "porte": "grande",
+      "investimento": "mais de US$ 60 milhões na ampliação",
+      "empregos": "",
+      "motivo": "Exportar a partir do Paraguai: 90% da produção vai para 18 países.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "Entra aqui como contexto: é por ela, via maquila, que medicamento feito no Paraguai chega ao Brasil, segundo a Cifarma.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "ABC Color, 27/10/2025",
+          "u": "https://www.abc.com.py/economia/2025/10/27/exportaciones-farmaceuticas-apuntan-a-us-90-millones-y-buscan-nuevos-mercados/"
+        },
+        {
+          "t": "Infonegocios (PY)",
+          "u": "https://infonegocios.com.py/plus/adium-inaugura-su-planta-farmaceutica-mas-moderna-de-la-region-con-inversion-de-us-60-millones"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c19",
+      "empresa": "BOOS Mangueiras e Eletrodutos",
+      "setor": "plastico",
+      "origem": "Brasil (cidade não informada)",
+      "destino": "Paraguai",
+      "cidade": "Alto Paraná",
+      "modelo": "dono_muda",
+      "regime": "Maquila",
+      "quando": "agosto de 2025",
+      "porte": "pequeno_medio",
+      "investimento": "US$ 70 mil iniciais",
+      "empregos": "não divulgado",
+      "motivo": "Abastecer o mercado brasileiro a partir do Paraguai.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "O dono, José Carlos Boos Jr., pediu residência permanente para instalar a planta: mudou junto.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_implantacao",
+      "fontes": [
+        {
+          "t": "Agência IP (governo do Paraguai), 25/08/2025",
+          "u": "https://www.ip.gov.py/ip/2025/08/25/empresario-brasileno-se-radicara-en-paraguay-para-instalar-planta-maquiladora-en-alto-parana/"
+        }
+      ],
+      "conf": "oficial"
+    }
+  ],
+  "modelos": {
+    "fabrica_dono_fica": "Fábrica no exterior, dono continua no Brasil",
+    "terceirizacao": "Produção terceirizada no exterior",
+    "dono_muda": "Dono se muda e toca a operação de lá",
+    "filial_cliente": "Filial para acompanhar um cliente",
+    "filial_mercado_local": "Filial para vender no país de destino",
+    "filial_mercado_externo": "Filial para entrar num mercado novo",
+    "terra": "Compra de terra e produção agrícola",
+    "mudanca_vida": "Mudança de vida com negócio pequeno",
+    "contexto": "Contexto do setor (não é empresa brasileira)"
+  },
+  "fontes_regulatorias_farma": [
+    {
+      "t": "Anvisa, relatório internacional de inspeções 2024-2025",
+      "u": "https://www.gov.br/anvisa/pt-br/centraisdeconteudo/publicacoes/certificacao-e-fiscalizacao/manuais-e-orientacoes/relatorio-internacional-2024-2025",
+      "conf": "oficial"
+    },
+    {
+      "t": "La Nación (PY), setor farmacêutico, 12/11/2024",
+      "u": "https://www.lanacion.com.py/negocios/2024/11/12/sector-farmaceutico-estima-crecimiento-del-2-para-el-cierre-del-ano",
+      "conf": "imprensa"
+    },
+    {
+      "t": "Anvisa: canetas do Paraguai não demonstraram equivalência",
+      "u": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/canetas-do-paraguai-nao-demonstraram-equivalencia-com-medicamentos-registrados-no-brasil",
+      "conf": "oficial"
+    },
+    {
+      "t": "Infonegocios (PY), 01/04/2025: Aché chega ao Paraguai pela Bioethic Pharma",
+      "u": "https://infonegocios.com.py/minuto-salud/el-lider-farmaceutico-de-brasil-laboratorios-ache-llega-con-bioethic-pharma-con-productos-cardiologicos-y-cardiometabolicos",
+      "conf": "imprensa"
+    },
+    {
+      "t": "UIP, 01/07/2025: rodada de negócios com fabricantes brasileiros de dispositivos médicos (ABIMO)",
+      "u": "https://uip.org.py/2025/07/01/empresarios-del-sector-salud-se-preparan-para-una-rueda-de-negocios-con-fabricantes-brasilenos-de-dispositivos-medicos/",
+      "conf": "imprensa"
+    }
+  ]
+}

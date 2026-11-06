@@ -1,0 +1,151 @@
+{
+  "nota": "Acréscimo de 5/11/2026, pesquisa na imprensa paraguaia. Mesclar em casos-v5.json depois da rodada do Codex.",
+  "setor_farma_atualizado": {
+    "id": "farma",
+    "nome": "Farmacêutico, saúde e dispositivos médicos",
+    "presenca": "A indústria farmacêutica paraguaia exporta perto de US$ 100 milhões por ano, e cerca de US$ 50 milhões saem pela maquila. Segundo a ALIFAR, a maquila é hoje a única via de entrada de medicamento feito no Paraguai no Brasil e na Argentina, porque os produtos paraguaios não obtiveram registro direto nesses países. Não achamos farmacêutica de capital brasileiro com fábrica no Paraguai. Em dispositivos e insumos médicos há um caso com operação no Brasil e no Paraguai desde 2011 (SR Productos para la Salud) e uma missão de mais de 30 representantes da ABIMO em março de 2026.",
+    "por_que_vai": "Os mesmos atrativos da maquila: encargos, energia e imposto de 1% sobre o valor agregado. O Paraguai importa 95% dos dispositivos médicos que usa, e o governo quer produção local.",
+    "o_que_trava": "Para vender no Brasil, cada fábrica precisa de Certificação de Boas Práticas de Fabricação da Anvisa, com inspeção, e cada produto precisa de registro. Remédio paraguaio sem registro na Anvisa é contrabando ao cruzar a fronteira, como mostrou o caso das canetas de tirzepatida em 2026. O modelo que funciona hoje é fabricar no Paraguai para uma empresa que já tem o registro no Brasil (maquila por encomenda), não levar a farmacêutica inteira.",
+    "casos": [
+      "c17",
+      "c18",
+      "c9"
+    ],
+    "numeros": [
+      {
+        "rotulo": "Exportação farmacêutica do Paraguai",
+        "valor": "perto de US$ 100 milhões por ano, metade pela maquila",
+        "fonte": "1000 Noticias, 20/10/2026, entrevista com Gerardo García (ALIFAR)",
+        "u": "https://1000noticias.com.py/2026/10/20/farmaceuticas-paraguayas-casi-usd-100-millones-en-exportaciones-y-apuntan-a-los-biologicos/",
+        "conf": "imprensa"
+      },
+      {
+        "rotulo": "Exportação farmacêutica esperada para 2025",
+        "valor": "US$ 90 milhões (US$ 78 milhões em 2024)",
+        "fonte": "ABC Color, 27/10/2025, com a Cifarma",
+        "u": "https://www.abc.com.py/economia/2025/10/27/exportaciones-farmaceuticas-apuntan-a-us-90-millones-y-buscan-nuevos-mercados/",
+        "conf": "imprensa"
+      },
+      {
+        "rotulo": "Dispositivos médicos importados pelo Paraguai",
+        "valor": "95%",
+        "fonte": "Rediex/MIC, via reportagem",
+        "u": "https://www.rediex.gov.py/empresarios-brasilenos-del-sector-medico-destacan-oportunidades-de-inversion-en-paraguay/",
+        "conf": "oficial"
+      }
+    ],
+    "citacoes": [
+      {
+        "t": "Se está fabricando a nivel país y se está enviando a las empresas que tienen representación en los distintos países.",
+        "quem": "Gerardo García, presidente da ALIFAR",
+        "fonte": "1000 Noticias, 20/10/2026",
+        "u": "https://1000noticias.com.py/2026/10/20/farmaceuticas-paraguayas-casi-usd-100-millones-en-exportaciones-y-apuntan-a-los-biologicos/"
+      }
+    ],
+    "fontes_extra": [
+      {
+        "t": "Anvisa: canetas do Paraguai não demonstraram equivalência",
+        "u": "https://www.gov.br/anvisa/pt-br/assuntos/noticias-anvisa/canetas-do-paraguai-nao-demonstraram-equivalencia-com-medicamentos-registrados-no-brasil",
+        "conf": "oficial"
+      },
+      {
+        "t": "Infonegocios (PY), 01/04/2025: Aché chega ao Paraguai pela Bioethic Pharma",
+        "u": "https://infonegocios.com.py/minuto-salud/el-lider-farmaceutico-de-brasil-laboratorios-ache-llega-con-bioethic-pharma-con-productos-cardiologicos-y-cardiometabolicos",
+        "conf": "imprensa"
+      },
+      {
+        "t": "UIP, 01/07/2025: rodada de negócios com fabricantes brasileiros de dispositivos médicos (ABIMO)",
+        "u": "https://uip.org.py/2025/07/01/empresarios-del-sector-salud-se-preparan-para-una-rueda-de-negocios-con-fabricantes-brasilenos-de-dispositivos-medicos/",
+        "conf": "imprensa"
+      }
+    ],
+    "conf": "imprensa"
+  },
+  "casos_novos": [
+    {
+      "id": "c17",
+      "empresa": "SR Productos para la Salud",
+      "setor": "farma",
+      "origem": "Unidade também em Manaus (AM) e centros de distribuição em Ponta Porã (MS)",
+      "destino": "Paraguai",
+      "cidade": "Pedro Juan Caballero",
+      "modelo": "fabrica_dono_fica",
+      "regime": "Maquila, uma das primeiras do departamento de Amambay",
+      "quando": "desde 2011",
+      "porte": "medio_grande",
+      "investimento": "não divulgado; mais de 50 mil m² construídos somando Manaus e Pedro Juan Caballero",
+      "empregos": "não divulgado",
+      "motivo": "Produção de insumos médicos para o mercado paraguaio e regional, na fronteira com Ponta Porã.",
+      "mudanca_valor": "Não divulgada. Vende também ao Ministério da Saúde paraguaio por licitação.",
+      "desafios": "Origem do capital não declarada na reportagem oficial: conferir.",
+      "citacao": "Este fue un sueño para mí y para mi país. Tenemos que luchar juntos para desarrollar nuestro Paraguay.",
+      "quem_disse": "Felipe Saldanha, diretor da SR",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "Rediex (governo do Paraguai), 30/03/2026",
+          "u": "https://www.rediex.gov.py/empresarios-brasilenos-del-sector-medico-destacan-oportunidades-de-inversion-en-paraguay/"
+        }
+      ],
+      "conf": "conferir"
+    },
+    {
+      "id": "c18",
+      "empresa": "Adium Paraguay (antiga Fapasa)",
+      "setor": "farma",
+      "origem": "Grupo farmacêutico latino-americano, com referências argentinas; não é brasileiro",
+      "destino": "Paraguai",
+      "cidade": "Grande Assunção",
+      "modelo": "contexto",
+      "regime": "Maquila para chegar ao Brasil",
+      "quando": "ampliação inaugurada em março de 2026",
+      "porte": "grande",
+      "investimento": "mais de US$ 60 milhões na ampliação",
+      "empregos": "",
+      "motivo": "Exportar a partir do Paraguai: 90% da produção vai para 18 países.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "Entra aqui como contexto: é por ela, via maquila, que medicamento feito no Paraguai chega ao Brasil, segundo a Cifarma.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "ABC Color, 27/10/2025",
+          "u": "https://www.abc.com.py/economia/2025/10/27/exportaciones-farmaceuticas-apuntan-a-us-90-millones-y-buscan-nuevos-mercados/"
+        },
+        {
+          "t": "Infonegocios (PY)",
+          "u": "https://infonegocios.com.py/plus/adium-inaugura-su-planta-farmaceutica-mas-moderna-de-la-region-con-inversion-de-us-60-millones"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c19",
+      "empresa": "BOOS Mangueiras e Eletrodutos",
+      "setor": "plastico",
+      "origem": "Brasil (cidade não informada)",
+      "destino": "Paraguai",
+      "cidade": "Alto Paraná",
+      "modelo": "dono_muda",
+      "regime": "Maquila",
+      "quando": "agosto de 2025",
+      "porte": "pequeno_medio",
+      "investimento": "US$ 70 mil iniciais",
+      "empregos": "não divulgado",
+      "motivo": "Abastecer o mercado brasileiro a partir do Paraguai.",
+      "mudanca_valor": "Não divulgada.",
+      "desafios": "O dono, José Carlos Boos Jr., pediu residência permanente para instalar a planta: mudou junto.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_implantacao",
+      "fontes": [
+        {
+          "t": "Agência IP (governo do Paraguai), 25/08/2025",
+          "u": "https://www.ip.gov.py/ip/2025/08/25/empresario-brasileno-se-radicara-en-paraguay-para-instalar-planta-maquiladora-en-alto-parana/"
+        }
+      ],
+      "conf": "oficial"
+    }
+  ]
+}
