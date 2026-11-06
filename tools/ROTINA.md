@@ -42,7 +42,9 @@ brasileira, sair não reduz imposto. A análise é direta e sempre com fonte.
    - Caso novo de empresa: acrescente em `casos` com todos os campos dos casos existentes (`setor` e
      `modelo` com os valores já usados) e inclua o `id` na lista `casos` do setor.
    - Se um risco mudar de forma material um caminho do diagnóstico, acrescente uma frase curta ao `texto`
-     desse caminho em `perguntas-v5.json`. Não mexa em `ideal`, `eixos`, `escala`, perguntas ou regras.
+     desse caminho em `perguntas-v5.json`. A rotina só pode acrescentar frases ao `texto` dos caminhos.
+     Nunca mexa em `parametros`, `ideal`, `eixos`, perguntas (`fatos`, `opcoes`, `eixo`, `porque`, `se`,
+     `nucleo`) ou `regras`.
    - Acrescente **no início** de `atualizacoes` um item `{"data": hoje, "titulo": "...", "itens": [...],
      "automatica": true}`: título factual de jornal; de 3 a 6 itens, frases curtas, cada uma com o fato e o
      número. Mantenha no máximo 30 itens em `atualizacoes`.
@@ -55,7 +57,7 @@ brasileira, sair não reduz imposto. A análise é direta e sempre com fonte.
    - Nunca altere fórmulas do simulador, testes, CSS ou JavaScript. Nunca apague normas, casos ou números
      (corrija ou marque como superado no texto).
 6. Rode, nesta ordem: `python3 tools/embed.py`, `node tests/simulator.test.cjs`,
-   `node tests/rendered.test.cjs`, `node tests/v5-scenarios.cjs`, `python3 tests/validate_html.py`.
+   `node tests/rendered.test.cjs`, `node tests/v8-scenarios.cjs`, `python3 tests/validate_html.py`.
    Se algo falhar, corrija os dados (nunca os testes). Se não conseguir, desfaça suas mudanças com
    `git checkout -- .` e termine relatando o erro, sem commit.
 7. Registre em `atualizacoes/AAAA-MM-DD.md` o que mudou, com as fontes, e o que você pesquisou e decidiu

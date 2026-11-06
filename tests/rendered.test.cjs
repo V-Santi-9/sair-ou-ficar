@@ -28,7 +28,7 @@ function node(id) {
     classList:{toggle(){},add(){},remove(){},contains(){return false;}}, setAttribute(){}, addEventListener(type,handler){(this.listeners[type]??=[]).push(handler);}, focus(){context.document.activeElement=this;}, querySelector(){return node('dummy');},scrollIntoView(){}});
   return nodes.get(id);
 }
-const context = createContext({fmtBRL:v=>'R$ '+Math.round(v).toLocaleString('pt-BR'),setTimeout,el:node, document:{querySelectorAll:()=>[],getElementById:node,body:node('body')}, css:()=> '#555555'});
+const context = createContext({fmtBRL:v=>'R$ '+Math.round(v).toLocaleString('pt-BR'),setTimeout,clearTimeout,el:node, document:{querySelectorAll:()=>[],getElementById:node,body:node('body')}, css:()=> '#555555'});
 for (const name of ['articles','dests','simDests','costs']) runInContext(declaration(name,'\n  ];'),context);
 for (const name of ['myths','countries']) runInContext(declaration(name,'\n  ];'),context);
 for (const name of ['editorialTitles','portaTxt','mapStops','exits','resultLabels','statusShapes']) runInContext(declaration(name,';'),context);
@@ -37,12 +37,12 @@ runInContext(script.split('\n').find(line=>line.startsWith('  var study = ')),co
 const v4Functions=['esc','dateText','copy','sourceLink','statusBadge','dossierLink','countryOf','countryItems','selectFilter','unique','emptyText','attentionNorms','normReferences','filterNorms','normRow','renderNorms','renderTimeline','storyMarkup','storyGroups','renderStories','videoMarkup','mediaMarkup','renderLibrary','numberMarkup','renderCountry','sourceGroups','renderSources','buildStudy'];
 for (const name of v4Functions) runInContext(functionSource(name),context);
 for(const name of ['axesData','caseData'])runInContext(script.split('\n').find(line=>line.startsWith('  var '+name+' = ')),context);
-const v5Functions=['applicable','diagnosticQuestions','ruleMatches','calculateDiagnostic','sectorMembership','caseRecords','compatibleSize','similarCases','sectorName','resultName','caseCard','caseTable','aggregatesMarkup','sectorMarkup','renderCases','renderSector','ownerAccount','calculationMarkup','signed','pathNextSteps','diagnosticReport','ruleMarkup','persistDiagnostic','readDiagnostic','diagnosticIntro','renderDiagnostic','saveDiagnosticAnswer','advanceDiagnostic','closeNavigation','updateTopButton','buildV5'];
+const v5Functions=['factLabel','destinationPhrase','whyLine','ownerDestination','diagnosticDecision','axisAnswer','diagnosticChanges','diagnosticFacts','matrixMarkup','gainFormula','axesMarkup','cancelDiagnosticAdvance','queueDiagnosticAdvance','diagnosticPreviewMarkup','updateDiagnosticPreview','bindDiagnostic','applicable','diagnosticQuestions','ruleMatches','calculateDiagnostic','sectorMembership','caseRecords','compatibleSize','similarCases','sectorName','resultName','caseCard','caseTable','aggregatesMarkup','sectorMarkup','renderCases','renderSector','ownerAccount','calculationMarkup','signed','pathNextSteps','diagnosticReport','ruleMarkup','persistDiagnostic','readDiagnostic','diagnosticIntro','renderDiagnostic','saveDiagnosticAnswer','advanceDiagnostic','closeNavigation','updateTopButton','buildV5'];
 for(const name of v5Functions)runInContext(functionSource(name),context);
 for(const name of ['materials'])runInContext(script.split('\n').find(line=>line.startsWith('  var '+name+' = ')),context);
 const v7Functions=['materialMatches','materialImage','materialFigure','materialsMarkup','openMaterial','closeMaterial','restoreMaterialFocus','materialFailure','scenarioSVG','scenarioSources','scenarioScreen','aggregate','aggregateSource','scenarioAccount','dividendFlow','flowMarkup','updateScenarioFlow','payrollAccount','factoryDrawing','gaugeSVG','productionMap','factoryPictograms','person','ownerDrawing','pharmaSymbol','residenceData','dotGroup','residenceDots','scenariosMarkup','milestoneDate','timelineMilestones','milestoneMarkup','miniTimelineMarkup','homeScenariosMarkup','focusScenario','buildV7'];
 for(const name of v7Functions)runInContext(functionSource(name),context);
-context.pendingScenarioJump='';context.diagnosticState=null;context.diagnosticSaved=null;context.diagnosticStorage=true;
+context.pendingScenarioJump='';context.diagnosticState=null;context.diagnosticSaved=null;context.diagnosticStorage=true;context.diagnosticTimer=null;context.diagnosticPanelOpen=true;
 const fragments = [];
 function capture(name, id) {fragments.push([name,node(id).innerHTML]);}
 
@@ -157,60 +157,62 @@ test('Simple hash routes open each norm despite stale filters, and preserve chan
 test('V5 embedded datasets exactly match the two provided files',()=>{
   for(const [name,file] of [['axesData','perguntas-v5.json'],['caseData','casos-v5.json']])assert.deepEqual(JSON.parse(JSON.stringify(context[name])),JSON.parse(readFileSync(path.join(root,'data',file),'utf8')));
 });
-test('Rapid uses only applicable core questions; complete respects all conditional branches',()=>{
-  for(const industria of ['sim','terceiro','nao',null])for(const familia of ['so','casal','filhos','ninguem',null])for(const setor of context.caseData.setores.map(s=>s.id))for(const mode of ['rapido','completo']){
-    const facts={industria,familia,setor};const actual=Array.from(context.diagnosticQuestions(mode,facts),q=>q.id);
-    const expected=[...context.axesData.fatos.filter(q=>mode==='completo'||q.nucleo),...context.axesData.afirmacoes.filter(q=>(mode==='completo'||q.nucleo)&&(!q.se||Object.entries(q.se).every(([key,options])=>options.includes(facts[key]))))].map(q=>q.id);
-    assert.deepEqual(actual,expected);assert.ok(actual.length<=78);if(mode==='rapido')assert.equal(actual.length,21);
-  }
-  assert.equal(context.diagnosticQuestions('completo',{industria:'sim',familia:'filhos',setor:'farma'}).length,78);
-  assert.ok(context.diagnosticQuestions('completo',{industria:'nao',familia:'so',setor:'varejo'}).length<78);
+test('Rapid uses the exact 15 core questions; complete respects all conditional branches',()=>{
+ const core=['setor','industria','porte','regime','export','folha','energia','regulacao','familia','presenca','cidadania','dividendos','rend_ext','motivo','risco'];
+ assert.deepEqual(Array.from(context.axesData.fatos.filter(q=>q.nucleo),q=>q.id),core);
+ for(const industria of ['sim','terceiro','nao',null])for(const familia of ['so','casal','filhos','ninguem',null])for(const setor of context.caseData.setores.map(s=>s.id))for(const mode of ['rapido','completo']){
+  const facts={industria,familia,setor},actual=Array.from(context.diagnosticQuestions(mode,facts),q=>q.id);
+  const expected=context.axesData.fatos.filter(q=>(mode==='completo'||q.nucleo)&&Object.entries(q.se).every(([key,options])=>options.includes(facts[key]))).map(q=>q.id);
+  assert.deepEqual(actual,Array.from(expected));assert.ok(actual.length<=39);if(mode==='rapido')assert.equal(actual.length,['sim','terceiro'].includes(industria)?15:12);
+ }
+ assert.equal(context.diagnosticQuestions('completo',{industria:'sim',familia:'filhos'}).length,39);
+ for(const q of context.axesData.fatos){assert.ok(q.porque);assert.ok(q.eixo);assert.ok(q.se);if(q.tipo==='escolha'&&q.id!=='setor')assert.ok(q.opcoes.length>=3&&q.opcoes.length<=5);}
 });
-const scenarios=require('./v5-scenarios.cjs');
-test('Three hand-worked profiles produce exact axes, expected paths, alerts and unchanged owner arithmetic',()=>{
-  for(const scenario of scenarios){
-    const result=context.calculateDiagnostic(scenario.state);
-    for(const [id,value]of Object.entries(scenario.expected))assert.ok(Math.abs(result.axes[id].value-value)<1e-9,scenario.name+' '+id);
-    assert.equal(result.paths[0].id,scenario.top,scenario.name);
-    if(scenario.rule)assert.ok(result.rules.some(r=>r.id===scenario.rule));
-    const account=context.ownerAccount(scenario.state.facts,result.paths[0]);assert.ok(Math.abs(account.stayAll-scenario.stay)<1e-7);assert.ok(Math.abs(account.goAll-scenario.go)<1e-7);
-    const report=context.diagnosticReport(scenario.state);fragments.push(['scenario-'+scenario.top,report]);assert.match(report,/Como calculamos/);assert.match(report,/Próximos passos/);assert.equal((report.match(/class="axis-track"/g)||[]).length,8);
-    for(const p of result.paths){const ids=Object.keys(p.ideal);const distance=Math.sqrt(ids.reduce((sum,id)=>sum+(scenario.expected[id]-p.ideal[id]*50)**2,0));const expected=Math.min(100,100-100*distance/(200*Math.sqrt(ids.length))+10*p.notes.filter(r=>r.tipo==='reforco').length);assert.ok(Math.abs(p.affinity-expected)<1e-9);}
-  }
+const scenarios=require('./v8-scenarios.cjs');
+
+test('Four hand-worked profiles produce exact axes, decisions, alerts and unchanged owner arithmetic',()=>{
+ for(const scenario of scenarios){
+  const r=context.calculateDiagnostic(scenario.state),d=r.decision,a=context.ownerAccount(scenario.state.facts);
+  for(const [id,v]of Object.entries(scenario.expected))assert.ok(Math.abs(r.axes[id].value-v)<1e-9,scenario.name+' '+id);
+  assert.equal(r.recommended[0].id,scenario.top);assert.equal(d.cell,scenario.cell);assert.ok(r.rules.some(x=>x.id===scenario.rule));
+  assert.equal(a.stayAll,scenario.stay);assert.ok(Math.abs(a.goAll-scenario.go)<1e-7);
+  const report=context.diagnosticReport(scenario.state);fragments.push(['scenario-'+scenario.name,report]);assert.match(report,/Como chegamos aqui/);assert.match(report,/Próximos passos/);assert.equal((report.match(/class="axis-track"/g)||[]).length,8);
+  for(const p of r.paths){const ids=Object.keys(p.ideal),distance=Math.sqrt(ids.reduce((sum,id)=>sum+(scenario.expected[id]-p.ideal[id]*50)**2,0));assert.ok(Math.abs(p.affinity-(100-100*distance/(200*Math.sqrt(ids.length))))<1e-9);}
+ }
 });
-test('Veto v1 removes maquila without a factory; v2 flags pharmaceuticals and REG threshold uses /50',()=>{
-  const state={mode:'rapido',facts:{industria:'nao',setor:'varejo'},answers:{}};
-  let result=context.calculateDiagnostic(state);assert.ok(result.rules.some(r=>r.id==='v1'));assert.ok(!result.paths.some(p=>p.id==='maquila'));
-  assert.match(context.diagnosticReport(state),/data-rule="v1"/);
-  for(const industry of ['sim','terceiro','nao']){result=context.calculateDiagnostic({...state,facts:{industria:industry,setor:'farma'}});assert.ok(result.rules.some(r=>r.id==='v2'));}
-  assert.ok(context.calculateDiagnostic({...state,facts:{industria:'sim',setor:'textil'},answers:{r1:1}}).rules.some(r=>r.id==='v2'));
-  assert.ok(!context.calculateDiagnostic({...state,facts:{industria:'sim',setor:'textil'},answers:{r1:0}}).rules.some(r=>r.id==='v2'));
+
+test('Explicit business rules veto retail maquila and lower the sanitary verdict exactly one level',()=>{
+ let r=context.calculateDiagnostic({mode:'rapido',facts:{industria:'nao',setor:'varejo'}});assert.ok(r.rules.some(x=>x.id==='v1'));assert.equal(r.paths.find(p=>p.id==='maquila').eligible,false);
+ assert.match(context.diagnosticReport({mode:'rapido',facts:{industria:'nao',setor:'varejo'}}),/data-rule="v1"/);
+ for(const sector of ['farma','textil','alimentos']){r=context.calculateDiagnostic({...scenarios[3].state,facts:{...scenarios[3].state.facts,setor:sector}});assert.equal(r.decision.company.rawLevel,2);assert.equal(r.decision.company.level,1);assert.ok(r.rules.some(x=>x.id==='v2'));}
+ assert.ok(!context.calculateDiagnostic({...scenarios[0].state,facts:{...scenarios[0].state.facts,setor:'farma'}}).rules.some(x=>x.id==='v2'));
 });
+
 test('Safe rule parser covers precedence, missing values, lists and rejects execution',()=>{
-  const values={industria:'nao',setor:'varejo',REG:1,MOB:2,REND:-1,dividendos:80000,cidadania:'ue',familia:'casal',capital:null,regime:'real'};
-  for(const id of ['v1','v2','v3','v7','v8'])assert.equal(context.ruleMatches(context.axesData.regras.find(r=>r.id===id).se,values),true,id);
-  for(const id of ['v4','v5','v6'])assert.equal(context.ruleMatches(context.axesData.regras.find(r=>r.id===id).se,values),false,id);
+  const values={industria:'nao',setor:'varejo',REG:1,MOB:2,REND:-1,dividendos:80000,cidadania:'ue',familia:'casal',capital:null,regime:'real',regulacao:'sanitaria',motivo:'imposto',custo_sair:96000,custo_ficar:57600,destino:'us'};
+  for(const id of ['v1','v2','v3','v8'])assert.equal(context.ruleMatches(context.axesData.regras.find(r=>r.id===id).se,values),true,id);
+  for(const id of ['v4','v5','v6','v7'])assert.equal(context.ruleMatches(context.axesData.regras.find(r=>r.id===id).se,values),false,id);
   assert.equal(context.ruleMatches("REG == 1 || MOB == 0 && REND == 0",values),true);
   assert.equal(context.ruleMatches("(REG == 1 || MOB == 0) && REND == 0",values),false);
   for(const expression of ['constructor.constructor(1)','REG >= 1; process.exit()','REG >= 1 rubbish',"setor in ['varejo'",'MISSING == 0'])assert.equal(context.ruleMatches(expression,values),false);
 });
-test('Skipped questions are zero but missing axes are marked; hidden answers never affect score',()=>{
-  const blank={mode:'completo',facts:{industria:'nao',familia:'so',setor:'textil'},answers:{}};
-  const a=context.calculateDiagnostic(blank),b=context.calculateDiagnostic({...blank,answers:{m2:2,r2:2,p3:2,p4:2}});
-  assert.deepEqual(JSON.parse(JSON.stringify(a.axes)),JSON.parse(JSON.stringify(b.axes)));
-  assert.ok(Object.values(context.calculateDiagnostic({mode:'completo',facts:{},answers:{}}).axes).every(x=>x.noData&&x.value===0));
-  const neutral=context.calculateDiagnostic({mode:'rapido',facts:{},answers:{c5:0}});assert.equal(neutral.axes.INS.noData,false);assert.equal(neutral.axes.INS.value,0);
-  const partial=context.calculateDiagnostic({mode:'rapido',facts:{},answers:{m1:2}});assert.equal(partial.axes.MERC.value,50);assert.equal(partial.axes.MERC.denominator,4);
+test('Skipped questions mark missing data; conditional facts never affect hidden axes or estimates',()=>{
+ const blank={mode:'completo',facts:{industria:'nao',familia:'so',setor:'textil'}},a=context.calculateDiagnostic(blank),b=context.calculateDiagnostic({...blank,facts:{...blank.facts,folha:'60',energia:'mais',conjuge:'0',escola_idioma:'0'}});
+ assert.deepEqual(JSON.parse(JSON.stringify(a.axes)),JSON.parse(JSON.stringify(b.axes)));assert.equal(b.decision.company.gain,null);
+ const empty=context.calculateDiagnostic({mode:'completo',facts:{}});assert.ok(Object.values(empty.axes).every(x=>x.noData&&x.value===0));assert.equal(empty.decision.cell,null);
+ const neutral=context.calculateDiagnostic({mode:'rapido',facts:{industria:'sim',energia:'ns'}});assert.equal(neutral.axes.INS.noData,false);assert.equal(neutral.axes.INS.value,0);assert.equal(neutral.decision.company.gain,null);
+ const partial=context.calculateDiagnostic({mode:'rapido',facts:{export:'90'}});assert.equal(partial.axes.MERC.value,100);assert.equal(partial.axes.MERC.denominator,2);
 });
+
 test('Pharma report preserves c9 caveat and both regulatory sources',()=>{
-  const report=context.diagnosticReport({...scenarios[0].state,facts:{...scenarios[0].state.facts,setor:'farma'}});
+  const report=context.diagnosticReport(scenarios[3].state);
   assert.match(report,/Não achamos caso do seu setor|Blink Bioscience/);assert.match(report,/Não é medicamento humano/);assert.match(report,/Fontes regulatórias do setor farmacêutico/);assert.match(report,/data-rule="v2"/);
   for(const source of context.caseData.fontes_regulatorias_farma)assert.ok(report.includes(source.u));fragments.push(['pharma-report',report]);
 });
 test('Similarity scores use supplied evidence, stable ordering and at most five cases',()=>{
-  const s=scenarios[0].state,result=context.calculateDiagnostic(s),matches=context.similarCases(s.facts,result.paths[0]);assert.equal(matches.length,5);assert.equal(matches[0].record.id,'c1');assert.equal(matches[0].score,7);
+  const s=scenarios[0].state,result=context.calculateDiagnostic(s),matches=context.similarCases(s.facts,result.recommended[0]);assert.equal(matches.length,5);assert.equal(matches[0].record.id,'c1');assert.equal(matches[0].score,7);
   for(const m of matches)assert.equal(m.score,m.reasons.reduce((a,r)=>a+r[1],0));
-  for(const m of context.similarCases(scenarios[2].state.facts,context.calculateDiagnostic(scenarios[2].state).paths[0]))if(m.record.relato)assert.ok(m.reasons.every(r=>r[0]!=='Modelo do caminho'&&r[0]!=='Porte compatível'));
+  for(const m of context.similarCases(scenarios[2].state.facts,context.calculateDiagnostic(scenarios[2].state).recommended[0]))if(m.record.relato)assert.ok(m.reasons.every(r=>r[0]!=='Modelo do caminho'&&r[0]!=='Porte compatível'));
 });
 test('All 34 records have canonical anchors, all 13 sectors only contain linked records; filters combine and reset',()=>{
   for(const k of ['setor','destino','modelo','resultado'])node('case-'+k).value='';context.renderCases();capture('all-cases','caseList');
@@ -222,16 +224,18 @@ test('All 34 records have canonical anchors, all 13 sectors only contain linked 
   node('case-destino').value='Portugal';context.renderCases();assert.match(node('caseList').innerHTML,/Nenhum caso/);assert.match(node('caseList').innerHTML,/Limpar filtros/);capture('empty-cases','caseList');
   for(const k of ['setor','destino','modelo','resultado'])node('case-'+k).value='';
 });
-test('Every applicable question renders; localStorage denial, malformed data and resume are safe',()=>{
-  context.localStorage={getItem(){throw Error('denied');},setItem(){throw Error('denied');}};assert.doesNotThrow(()=>context.diagnosticIntro());capture('intro-denied','diagnosticApp');
-  assert.doesNotThrow(()=>context.persistDiagnostic());assert.match(node('diagnosticSave').textContent,/não permitiu/);
-  const state={version:5,mode:'completo',facts:{...scenarios[0].state.facts,setor:'farma',familia:'filhos'},answers:{},step:0};context.diagnosticState=state;
-  for(let i=0;i<78;i++){state.step=i;context.renderDiagnostic(false);capture('v5-question-'+i,'diagnosticApp');}
-  context.localStorage={getItem:()=>'{broken'};assert.equal(context.readDiagnostic(),null);
-  context.localStorage={getItem:()=>JSON.stringify({...state,step:999,facts:{setor:'farma',industria:'bad',dividendos:-1},answers:{c5:2,m1:999,unknown:2}})};
-  const saved=context.readDiagnostic();assert.equal(saved.facts.setor,'farma');assert.equal(saved.facts.industria,undefined);assert.equal(saved.facts.dividendos,undefined);assert.equal(saved.answers.m1,undefined);assert.equal(saved.answers.c5,2);assert.ok(saved.step<78);
-  context.diagnosticIntro();assert.match(node('diagnosticApp').innerHTML,/Continuar de onde parou/);assert.match(node('diagnosticApp').innerHTML,/Recomeçar/);
+test('Every applicable question renders; storage denial, malformed data, legacy state and resume are safe',()=>{
+ context.localStorage={getItem(){throw Error('denied');},setItem(){throw Error('denied');}};assert.doesNotThrow(()=>context.diagnosticIntro());capture('intro-denied','diagnosticApp');
+ assert.doesNotThrow(()=>context.persistDiagnostic());assert.match(node('diagnosticSave').textContent,/não permitiu/);
+ const state={version:8,mode:'completo',facts:{...scenarios[0].state.facts,setor:'farma',familia:'filhos'},answers:{},step:0};context.diagnosticState=state;
+ for(let i=0;i<context.diagnosticQuestions(state.mode,state.facts).length;i++){state.step=i;context.renderDiagnostic(false);capture('v8-question-'+i,'diagnosticApp');assert.match(node('diagnosticApp').innerHTML,/id="diagnosticWhy"/);assert.doesNotMatch(node('diagnosticApp').innerHTML,/scale-options/);}
+ context.localStorage={getItem:()=>'{broken'};assert.equal(context.readDiagnostic(),null);
+ context.localStorage={getItem:k=>k.endsWith('v5')?JSON.stringify({version:5,facts:{setor:'farma'}}):null};context.diagnosticIntro();assert.equal(context.diagnosticSaved,null);assert.match(node('diagnosticApp').innerHTML,/Suas respostas antigas não valem/);
+ context.localStorage={getItem:()=>JSON.stringify({...state,step:999,facts:{setor:'farma',industria:'bad',dividendos:-1,energia:'mais'},answers:{c5:2,unknown:2}})};
+ const saved=context.readDiagnostic();assert.equal(saved.facts.setor,'farma');assert.equal(saved.facts.industria,undefined);assert.equal(saved.facts.dividendos,undefined);assert.equal(saved.facts.energia,undefined);assert.deepEqual(Object.keys(saved.answers),[]);assert.ok(saved.step<39);
+ context.diagnosticIntro();assert.match(node('diagnosticApp').innerHTML,/Continuar de onde parou/);assert.match(node('diagnosticApp').innerHTML,/Recomeçar/);
 });
+
 test('Case deep links clear stale filters, all sector hashes route and country dossiers include own companies',()=>{
   const views=Array.from(html.matchAll(/<section class="view(?: on)?" id="v-([^"]+)" data-route="([^"]+)"/g),m=>({getAttribute:()=>m[2],classList:{toggle(k,v){this.on=v;}},route:m[2]}));
   context.document.querySelectorAll=selector=>selector==='section.view'?views:[];context.window={scrollTo(){},scrollY:0,innerHeight:800};context.document.documentElement={scrollHeight:2000};context.location={hash:''};context.first=true;
@@ -240,35 +244,34 @@ test('Case deep links clear stale filters, all sector hashes route and country d
   for(const country of context.countries){context.renderCountry(country.slug);const ids=Array.from(node('countryReport').innerHTML.matchAll(/data-case="([^"]+)"/g),m=>m[1]);assert.deepEqual(ids,Array.from(context.caseData.casos.filter(c=>c.destino===country.nome),c=>c.id));}
   context.document.querySelectorAll=()=>[];
 });
-test('Real UI handlers start, skip, go back, persist, resume, use keyboard and transfer exact inputs to simulator',()=>{
-  const memory=new Map();context.localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v),removeItem:k=>memory.delete(k)};
-  context.document.addEventListener=()=>{};context.window.addEventListener=()=>{};
-  context.document.documentElement={scrollHeight:2000};context.window.innerHeight=800;
-  context.buildV5();capture('v5-home-sectors','homeSectors');capture('v5-aggregates','caseAggregates');capture('v5-filters','caseFilters');
-  const app=node('diagnosticApp');const click=(key,value)=>app.listeners.click[0]({target:{closest:selector=>selector==='[data-diag-'+key+']'?{dataset:{[key==='mode'?'diagMode':'diagAction']:value}}:null}});
-  app.querySelector=selector=>{assert.equal(selector,'input[name=diagnosticMode]:checked');return {value:'rapido'};};
-  click('action','start');assert.equal(context.diagnosticState.step,0);assert.equal(context.diagnosticState.mode,'rapido');
-  click('action','skip');assert.equal(context.diagnosticState.facts.setor,null);assert.equal(context.diagnosticState.step,1);
-  node('diagnosticForm').querySelector=()=>null;click('action','back');assert.equal(context.diagnosticState.step,0);
-  const form=node('diagnosticForm');form.querySelector=()=>({value:'textil'});app.listeners.submit[0]({target:{id:'diagnosticForm'},preventDefault(){}});assert.equal(context.diagnosticState.facts.setor,'textil');assert.equal(context.diagnosticState.step,1);
-  // Persist numeric changes without blur. Invalid numbers do not advance.
-  context.diagnosticState.step=6;context.renderDiagnostic(false);node('diagnosticAmount').value='80000';app.listeners.input[0]({target:{id:'diagnosticAmount'}});assert.equal(context.diagnosticState.facts.dividendos,80000);
-  node('diagnosticAmount').value='-1';app.listeners.submit[0]({target:{id:'diagnosticForm'},preventDefault(){}});assert.equal(context.diagnosticState.step,6);assert.match(node('diagnosticError').textContent,/Valores/);
-  node('diagnosticAmount').value='80000';app.listeners.submit[0]({target:{id:'diagnosticForm'},preventDefault(){}});node('diagnosticAmount').value='20000';app.listeners.submit[0]({target:{id:'diagnosticForm'},preventDefault(){}});
-  context.diagnosticState.step=10;context.renderDiagnostic(false);const radios=[2,1,0,-1,-2].map(v=>({value:String(v),focus(){},checked:false}));form.querySelectorAll=()=>radios;form.querySelector=()=>radios.find(r=>r.checked)||null;
-  app.listeners.keydown[0]({key:'5',target:{matches:()=>true},preventDefault(){}});assert.equal(context.diagnosticState.answers.m1,-2);
-  app.listeners.keydown[0]({key:'Enter',target:{matches:()=>true},preventDefault(){}});assert.equal(context.diagnosticState.step,11);
-  context.diagnosticIntro();click('action','resume');assert.equal(context.diagnosticState.step,11);assert.equal(context.diagnosticState.facts.dividendos,80000);
-  while(!context.diagnosticState.done)click('action','skip');assert.match(app.innerHTML,/>Seu retrato</);assert.match(app.innerHTML,/sem dados/);
-  const saved=JSON.parse(memory.get('sair-ficar-diagnostico-v5'));assert.equal(saved.done,true);
-  context.sel={value:''};let applied=0;context.applyDest=()=>applied++;context.location={hash:'#perfil'};click('action','simulator');assert.equal(node('divMes').value,80000);assert.equal(node('invExt').value,20000);assert.equal(node('corpRate').value,15);assert.equal(node('custoVida').value,0);assert.equal(applied,1);assert.equal(context.location.hash,'simulador');
-  app.querySelector=()=>node('dummy');
-  click('action','restart');assert.equal(context.diagnosticState,null);assert.equal(memory.has('sair-ficar-diagnostico-v5'),false);
-  // Changing a fact drops now-hidden answers, without retaining their score.
-  context.diagnosticState={version:5,mode:'completo',step:1,facts:{industria:'sim'},answers:{m2:2,c2:2,c8:2,r3:2}};form.querySelector=()=>({value:'nao'});context.saveDiagnosticAnswer(false,true);assert.deepEqual(Object.keys(context.diagnosticState.answers),[]);
-  context.localStorage={getItem:()=>JSON.stringify(saved),removeItem(){throw Error('denied');},setItem(){throw Error('denied');}};click('action','restart');assert.doesNotMatch(app.innerHTML,/Continuar de onde parou/);
+test('Real UI handlers: auto advance, cancellation, keyboard, amounts, resume and exact simulator transfer',()=>{
+ const memory=new Map();context.localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v),removeItem:k=>memory.delete(k)};
+ context.document.addEventListener=()=>{};context.window.addEventListener=()=>{};context.window.matchMedia=()=>({matches:false});context.document.documentElement={scrollHeight:2000};context.window.innerHeight=800;
+ let pending=null,delay;context.setTimeout=(fn,ms)=>{pending=fn;delay=ms;return 1;};context.clearTimeout=()=>pending=null;
+ context.buildV5();capture('v8-home-sectors','homeSectors');capture('v8-aggregates','caseAggregates');capture('v8-filters','caseFilters');
+ const app=node('diagnosticApp'),form=node('diagnosticForm');const click=(action)=>app.listeners.click[0]({target:{closest:s=>s==='[data-diag-action]'?{dataset:{diagAction:action}}:null}});
+ const submit=()=>app.listeners.submit[0]({target:{id:'diagnosticForm'},preventDefault(){}});
+ app.querySelector=()=>({value:'rapido'});click('start');assert.equal(context.diagnosticState.version,8);assert.equal(context.diagnosticState.step,0);
+ form.querySelector=()=>null;click('skip');assert.equal(context.diagnosticState.facts.setor,null);click('back');assert.equal(context.diagnosticState.step,0);
+ form.querySelector=()=>({value:'textil'});app.listeners.change[0]({target:{matches:()=>true}});assert.equal(delay,250);assert.equal(context.diagnosticState.step,0);assert.equal(context.diagnosticState.facts.setor,'textil');pending();assert.equal(context.diagnosticState.step,1);
+ form.querySelector=()=>({value:'sim'});app.listeners.change[0]({target:{matches:()=>true}});assert.ok(pending);click('back');assert.equal(pending,null);assert.equal(context.diagnosticState.step,0);
+ context.diagnosticState.facts={...scenarios[0].state.facts};context.diagnosticState.step=11;context.renderDiagnostic(false);node('diagnosticAmount').value='80000';app.listeners.input[0]({target:{id:'diagnosticAmount'}});assert.equal(context.diagnosticState.facts.dividendos,80000);
+ node('diagnosticAmount').value='-1';submit();assert.equal(context.diagnosticState.step,11);assert.match(node('diagnosticError').textContent,/Valores/);
+ app.listeners.click[0]({target:{closest:s=>s==='[data-diag-amount]'?{dataset:{diagAmount:'50000'}}:null}});assert.equal(context.diagnosticState.facts.dividendos,50000);assert.equal(context.diagnosticState.step,11);
+ node('diagnosticAmount').value='80000';submit();node('diagnosticAmount').value='20000';submit();assert.equal(context.diagnosticState.step,13);
+ const radios=['imposto','seguranca','escola','instabilidade','producao'].map(value=>({value,focus(){},checked:false}));form.querySelectorAll=()=>radios;form.querySelector=()=>radios.find(r=>r.checked)||null;
+ app.listeners.keydown[0]({key:'5',target:{matches:()=>false},preventDefault(){}});assert.equal(context.diagnosticState.facts.motivo,'producao');assert.ok(pending);
+ app.listeners.keydown[0]({key:'Enter',target:{matches:()=>true},preventDefault(){}});assert.equal(context.diagnosticState.step,14);assert.equal(pending,null);
+ context.diagnosticIntro();click('resume');assert.equal(context.diagnosticState.step,14);assert.equal(context.diagnosticState.facts.dividendos,80000);click('skip');assert.equal(context.diagnosticState.done,true);assert.match(app.innerHTML,/Empresa e dono: duas decisões/);
+ assert.equal(JSON.parse(memory.get('sair-ficar-diagnostico-v8')).done,true);
+ context.sel={value:''};let applied=0;context.applyDest=()=>applied++;context.location={hash:'#perfil'};click('simulator');assert.equal(node('divMes').value,80000);assert.equal(node('invExt').value,20000);assert.equal(node('corpRate').value,34);assert.equal(node('custoVida').value,0);assert.equal(context.sel.value,'py');assert.equal(applied,1);assert.equal(context.location.hash,'simulador');
+ context.diagnosticState=scenarios[2].state;click('simulator');assert.equal(context.sel.value,'es');assert.equal(node('corpRate').value,15);
+ app.querySelector=()=>node('dummy');click('restart');assert.equal(context.diagnosticState,null);assert.equal(memory.has('sair-ficar-diagnostico-v8'),false);
+ context.diagnosticState={version:8,mode:'completo',step:1,facts:{industria:'sim',folha:'60',energia:'mais',regulacao:'sanitaria'},answers:{old:2}};form.querySelector=()=>({value:'nao'});context.saveDiagnosticAnswer(false,true);assert.equal(context.diagnosticState.facts.folha,undefined);assert.equal(context.diagnosticState.facts.regulacao,undefined);assert.deepEqual(Object.keys(context.diagnosticState.answers),[]);
+ context.window.matchMedia=()=>({matches:true});context.diagnosticState.step=0;form.querySelector=()=>({value:'servicos'});app.listeners.change[0]({target:{matches:()=>true}});assert.equal(context.diagnosticState.step,1);assert.equal(pending,null);
+ context.localStorage={getItem:()=>JSON.stringify({version:8,mode:'rapido'}),removeItem(){throw Error('denied');},setItem(){throw Error('denied');}};click('restart');assert.doesNotMatch(app.innerHTML,/Continuar de onde parou/);
+ context.setTimeout=setTimeout;context.clearTimeout=clearTimeout;
 });
-
 
 test('V7 defaults to dark without saved preference; explicit theme persists and toggles both ways',()=>{
   assert.match(html,/<html[^>]*data-theme="dark"/);
@@ -284,32 +287,128 @@ test('V7 defaults to dark without saved preference; explicit theme persists and 
     handler();assert.equal(theme,expected);assert.equal(stored,theme);
   }
 });
-test('V6 cover has no eyebrow and intro shows eight neutral axes with a radio choice and one start action',()=>{
-  const home=html.split('id="v-inicio"')[1].split('<!-- PERFIL -->')[0];
-  assert.doesNotMatch(home,/class="eyebrow"|Residência fiscal e negócios/);
-  context.diagnosticIntro(true);const intro=node('diagnosticApp').innerHTML;
-  assert.equal((intro.match(/class="preview-track"/g)||[]).length,8);
-  assert.equal((intro.match(/name="diagnosticMode"/g)||[]).length,2);
-  assert.equal((intro.match(/data-diag-action="start"/g)||[]).length,1);
-  assert.doesNotMatch(intro,/class="mode-card"/);
+test('V8 intro preserves two modes and one start action, with an accessible neutral matrix',()=>{
+ const home=html.split('id="v-inicio"')[1].split('<!-- PERFIL -->')[0];assert.doesNotMatch(home,/class="eyebrow"|Residência fiscal e negócios/);
+ context.diagnosticIntro(true);const intro=node('diagnosticApp').innerHTML;assert.equal((intro.match(/data-cell=/g)||[]).length,4);assert.doesNotMatch(intro,/matrix-selected/);
+ assert.match(intro,/<svg[^>]*role="img"[^>]*aria-label=/);assert.equal((intro.match(/name="diagnosticMode"/g)||[]).length,2);assert.equal((intro.match(/data-diag-action="start"/g)||[]).length,1);
+ assert.match(intro,/15 perguntas · 4 minutos/);assert.match(intro,/cerca de 40 perguntas · 12 minutos/);assert.doesNotMatch(intro,/class="mode-card"|preview-track/);
 });
-test('V6 reports use words on axes, integer accessible scores and one sorted bar chart',()=>{
-  for(const scenario of scenarios){
-    const result=context.calculateDiagnostic(scenario.state),report=context.diagnosticReport(scenario.state);
-    const axes=report.split('<div class="axes-grid">')[1].split('<details class="calculation">')[0];
-    const text=axes.replace(/<[^>]*>/g,'');
-    assert.doesNotMatch(text,/[+-]?\d+[,.]\d+/);
-    assert.equal((axes.match(/class="axis-reading"/g)||[]).length,8);
-    for(const axis of context.axesData.eixos)assert.ok(axes.includes(context.esc(axis.nome+': '+Math.round(result.axes[axis.id].value))));
-    assert.match(text,/com força|moderado|de leve|equilibrado|sem dados/);
-    const paths=Array.from(report.matchAll(/class="path-bar(?: primary-path)?" data-path="([^"]+)"/g),m=>m[1]);
-    assert.deepEqual(paths,Array.from(result.paths,p=>p.id));
-    assert.equal((report.match(/class="path-bar primary-path"/g)||[]).length,1);
-    assert.equal((report.match(/>Ler o dossiê</g)||[]).length,Math.min(2,result.paths.length));
-    assert.doesNotMatch(report,/<h2>\d+\.|Semelhança: \d|class="path-card"/);
-    for(const rule of result.rules)assert.equal((report.match(new RegExp('data-rule="'+rule.id+'"','g'))||[]).length,1);
-  }
+
+test('V8 reports lead with two verdicts, accessible matrix and integer numbers; axes and ranking are collapsed',()=>{
+ for(const scenario of scenarios){
+  const result=context.calculateDiagnostic(scenario.state),report=context.diagnosticReport(scenario.state),header=report.split('</header>')[0];
+  assert.match(header,/empresa|Empresa|produzir|Produzir/);assert.match(header,/Você/);assert.doesNotMatch(header,/afinidade|axis-track|[0-9],[0-9]/);
+  assert.match(report,/<svg[^>]*role="img"[^>]*aria-label="[^"]+"/);assert.equal((report.match(/class="matrix-selected"/g)||[]).length,1);
+  assert.ok(report.indexOf('A empresa</h2>')<report.indexOf('O que mudaria'));assert.ok(report.indexOf('Você</h2>')<report.indexOf('O que mudaria'));
+  assert.match(report,/<details class="calculation diagnostic-section"><summary>Seu retrato em 8 eixos/);assert.match(report,/<details class="calculation diagnostic-section"><summary>Como chegamos aqui/);
+  const axes=report.split('<div class="axes-grid">')[1].split('</details>')[0],text=axes.replace(/<[^>]*>/g,'');assert.doesNotMatch(text,/[+-]?\d+[,.]\d+/);assert.equal((axes.match(/class="axis-reading"/g)||[]).length,8);
+  for(const axis of context.axesData.eixos)assert.ok(axes.includes(context.esc(axis.nome+': '+Math.round(result.axes[axis.id].value))));
+  const paths=Array.from(report.matchAll(/class="path-bar(?: primary-path)?" data-path="([^"]+)"/g),m=>m[1]);assert.deepEqual(paths,Array.from(result.paths,p=>p.id));assert.equal(paths.length,7);assert.equal((report.match(/class="path-bar primary-path"/g)||[]).length,1);
+  for(const rule of result.rules)assert.equal((report.match(new RegExp('data-rule="'+rule.id+'"','g'))||[]).length,1);
+  // Financial decimals are restricted to the explanatory account notes, across the entire report.
+  const decision=report.replace(/<p class="[^"]*account-note[^"]*">[\s\S]*?<\/p>/g,'').replace(/<[^>]*>/g,'');assert.doesNotMatch(decision,/\d+,\d+/);
+ }
+ for(const scenario of scenarios.slice(0,2)){const changes=context.diagnosticChanges(scenario.state);assert.ok(changes.length>=1);for(const change of changes)assert.ok(context.diagnosticReport(scenario.state).replace(/<[^>]*>/g,'').includes(context.esc(change.text)));}
 });
+
+test('V8 destination gates, tax threshold, no-move veto, filial and combined paths use explicit facts',()=>{
+ const run=changes=>context.calculateDiagnostic({version:8,mode:'completo',facts:{...scenarios[1].state.facts,...changes}});
+ let r=run({rend_ext:299999});assert.equal(r.decision.owner.account.destination.id,'py');
+ r=run({rend_ext:300000});assert.equal(r.decision.owner.account.destination.id,'uy');assert.equal(r.recommended[0].id,'patrimonio');assert.equal(r.decision.owner.moves,true);
+ r=run({rend_ext:300000,familia:'ninguem'});assert.equal(r.decision.owner.moves,false);assert.equal(r.recommended[0].id,'ficar');assert.ok(r.rules.some(x=>x.id==='v4'));
+ r=run({rend_ext:300000,motivo:'producao'});assert.equal(r.decision.owner.moves,false);
+ r=run({motivo:'instabilidade',rend_ext:0,cidadania:'ue'});assert.equal(r.decision.owner.account.destination.id,'pt');
+ r=run({motivo:'instabilidade',rend_ext:300000});assert.equal(r.decision.owner.account.destination.id,'uy');
+ for(const motivo of ['escola','seguranca']){
+  r=run({motivo,capital:'1000',idioma:'ingles'});assert.equal(r.recommended[0].id,'eua');assert.equal(r.decision.owner.account.destination.id,'us');
+  r=run({motivo,capital:'1000',idioma:'espanhol'});assert.equal(r.decision.owner.account.destination.id,'pt');
+  r=run({motivo,capital:'100',idioma:'ingles',cidadania:'ue'});assert.equal(r.decision.owner.account.destination.id,'es');assert.ok(r.rules.some(x=>x.id==='v6'));assert.ok(r.rules.some(x=>x.id==='v7'));
+  r=run({motivo,capital:'1000',idioma:'ambos',cidadania:'ue'});assert.ok(r.rules.some(x=>x.id==='v8'));
+ }
+ for(const exp of ['60','90']){r=run({export:exp});assert.equal(r.recommended[0].id,'filial_ext');assert.equal(r.decision.company.branch,true);assert.equal(r.decision.company.outside,false);}
+ r=run({export:'30'});assert.equal(r.decision.company.branch,false);
+ r=run({industria:'sim',folha:'45',energia:'8',motivo:'imposto',rend_ext:300000});assert.deepEqual(Array.from(r.recommended,p=>p.id),['maquila','dono_py']);assert.equal(r.decision.cell,'fora/muda');
+ r=run({dividendos:100000,rend_ext:0});assert.equal(r.decision.owner.gap,0);assert.equal(r.decision.owner.moves,false);assert.match(r.decision.owner.verdict,/economia de imposto é R\$ 0/);
+});
+test('V8 all cost bands, unknown estimates and sanitary floor follow only the published formula',()=>{
+ const payroll={'10':.10,'25':.22,'45':.40,'60':.60,'ns':.25},energy={'3':.02,'8':.055,'15':.11,'mais':.20,'ns':.05};
+ for(const [folha,p]of Object.entries(payroll))for(const [energia,e]of Object.entries(energy))for(const regulacao of ['nota','sanitaria']){
+  const d=context.diagnosticDecision({...scenarios[0].state.facts,folha,energia,regulacao}),expected=p*5/18+e*72/113,raw=expected>=.1?2:expected>=.05?1:0;
+  assert.ok(Math.abs(d.company.gain-expected)<1e-12);assert.equal(d.company.rawLevel,raw);assert.equal(d.company.level,regulacao==='sanitaria'?Math.max(0,raw-1):raw);
+ }
+ const missing=context.diagnosticDecision({...scenarios[0].state.facts,energia:null});assert.equal(missing.company.gain,null);assert.equal(missing.cell,null);
+ for(const industry of ['nao',undefined]){const d=context.diagnosticDecision({...scenarios[0].state.facts,industria:industry});assert.equal(d.company.gain,null);}
+});
+test('V8 live preview updates both decisions; matrix examples match documented company models',()=>{
+ let markup=context.diagnosticPreviewMarkup({mode:'rapido',facts:{}});assert.match(markup,/Empresa: ainda sem dados/);assert.match(markup,/Você: ainda sem dados/);assert.doesNotMatch(markup,/matrix-selected/);
+ markup=context.diagnosticPreviewMarkup(scenarios[0].state);assert.match(markup,/ganho estimado de 15%/);assert.match(markup,/Você fica/);assert.match(markup,/matrix-preview matrix-mini/);assert.match(markup,/data-cell="fora\/fica" class="matrix-selected"/);
+ fragments.push(['v8-live-panel',markup]);
+ for(const cell of context.axesData.parametros.matriz){if(cell.caso){const c=context.caseData.casos.find(c=>c.id===cell.caso);assert.ok(c);assert.equal(c.modelo,cell.modelo);}else assert.equal(cell.modelo,null);}
+ assert.equal(context.axesData.parametros.matriz.find(c=>c.id==='fora/muda').caso,'c19');
+ // The method cannot change a decision merely by changing an affinity weight.
+ const before=context.calculateDiagnostic(scenarios[0].state).decision,q=context.axesData.fatos.find(q=>q.id==='risco'),old=q.eixo.RISCO.sim;q.eixo.RISCO.sim=-2;
+ assert.deepEqual(JSON.parse(JSON.stringify(context.calculateDiagnostic(scenarios[0].state).decision)),JSON.parse(JSON.stringify(before)));q.eixo.RISCO.sim=old;
+});
+
+test('V8b report uses destination articles, full dates and natural reasons without arrows or empty case labels',()=>{
+ const expected={py:'para o Paraguai',uy:'para o Uruguai',pt:'para Portugal',es:'para a Espanha',it:'para a Itália',us:'para os EUA',ae:'para os Emirados'};
+ for(const [id,text] of Object.entries(expected))assert.equal(context.destinationPhrase(id),text);
+ for(const q of context.axesData.fatos)for(const option of q.opcoes){assert.ok(option.curta, q.id);assert.equal(option.curta[0],option.curta[0].toLocaleLowerCase('pt-BR'));assert.equal(context.factLabel(q.id,option.id,true),option.curta);}
+ for(const scenario of scenarios){
+  const report=context.diagnosticReport(scenario.state);fragments.push(['v8b-'+scenario.name,report]);
+  assert.doesNotMatch(report,/→|&rarr;|&#(?:8594|x2192);|Sem caso documentado|Você respondeu:|Se a resposta a “/i);
+  const date=report.match(/<time datetime="([^"]+)">([^<]+)<\/time>/);assert.ok(date);assert.match(date[2],/^\d{1,2} de [a-zç]+ de \d{4}$/);
+  const reasons=Array.from(report.matchAll(/<h3>Por que<\/h3>([\s\S]*?)<p class="note account-note">/g),m=>m[1]);assert.equal(reasons.length,2);
+  for(const reason of reasons)for(const line of reason.matchAll(/<p>([\s\S]*?)<\/p>/g))assert.match(line[1],/^Você respondeu <strong>.+<\/strong>\. [A-ZÁÉÍÓÚ]/);
+ }
+ const real=context.diagnosticReport(scenarios[0].state),presumed=context.diagnosticReport(scenarios[1].state);
+ assert.match(real,/Mudar para o Paraguai/);assert.match(real,/Sair para o Paraguai/);assert.match(real,/Você respondeu <strong>ninguém se mudaria<\/strong>\./);
+ assert.match(real,/No Lucro Real a empresa já paga 34% de IRPJ e CSLL, e o redutor zera o IR mínimo de quem fica\./);
+ assert.match(real,/data-rule="v4"><strong>Mudar de país sai da conta:<\/strong>/);
+ assert.match(presumed,/Você respondeu <strong>só clientes no Brasil<\/strong>\./);assert.match(presumed,/Você respondeu <strong>você e o cônjuge se mudariam<\/strong>\./);
+ for(const regime of ['presumido','simples'])assert.match(context.diagnosticReport({...scenarios[1].state,facts:{...scenarios[1].state.facts,regime}}),/Usamos 15% como premissa conservadora/);
+});
+
+test('V8b counterfactuals use short phrases, lowercase verdicts and the recalculated tax difference',()=>{
+ const company=context.diagnosticReport(scenarios[0].state),owner=context.diagnosticReport(scenarios[1].state);
+ assert.match(company,/Se a folha fosse menos de R\$ 15 em cada R\$ 100, a empresa passaria a <strong>pode valer<\/strong>\./);
+ assert.match(owner,/Se o motivo fosse segurança, mudar valeria pela qualidade de vida, e o imposto subiria R\$ 211\.200 por ano\./);
+ for(const scenario of scenarios)for(const change of context.diagnosticChanges(scenario.state)){
+  const next=context.diagnosticDecision(context.diagnosticFacts({mode:scenario.state.mode,facts:{...scenario.state.facts,[change.id]:change.value}}));
+  assert.deepEqual(JSON.parse(JSON.stringify(change.decision)),JSON.parse(JSON.stringify(next)));
+  if(change.verdict)assert.equal(change.verdict,change.verdict.toLocaleLowerCase('pt-BR'));
+ }
+});
+
+test('V8b matrix keeps row labels outside the cells and shows only paths, documented cases and selection',()=>{
+ const expected=['Reorganizar no Brasil','Mudar de país','Fábrica no Paraguai','Fábrica e dono no Paraguai'];
+ for(const mini of [false,true]){
+  const markup=context.matrixMarkup(context.diagnosticDecision(scenarios[0].state.facts),false,mini);
+  assert.match(markup,/>Você fica<\/text>/);assert.match(markup,/>Você se muda<\/text>/);
+  assert.equal((markup.match(/class="matrix-row-label"/g)||[]).length,2);
+  const cells=Array.from(markup.matchAll(/<g data-cell="([^"]+)"[^>]*>([\s\S]*?)<\/g>/g));assert.equal(cells.length,4);
+  cells.forEach((cell,i)=>{
+   const text=cell[2].replace(/<\/tspan><tspan[^>]*>/g,' ').replace(/<[^>]*>/g,'');assert.ok(text.includes(expected[i]));
+   assert.doesNotMatch(cell[2],/Empresa fica|Empresa produz fora|Produz fora|matrix-row-label|Sem caso documentado/);
+   if(i<2)assert.doesNotMatch(cell[2],/matrix-case/);else assert.match(cell[2],new RegExp('class="matrix-case"[^>]*>'+(i===2?'Lupo':'BOOS')+'<'));
+  });
+  assert.equal((markup.match(/Seu resultado/g)||[]).length,1);
+ }
+});
+
+test('V8b partial panel identifies missing energy and income; cover reads both modes from axesData',()=>{
+ const preview=facts=>context.diagnosticPreviewMarkup({mode:'rapido',facts});
+ assert.match(preview({industria:'sim',folha:'45'}),/Empresa: falta a energia/);
+ assert.match(preview({industria:'sim',energia:'8'}),/Empresa: falta a folha/);
+ assert.match(preview({industria:'sim'}),/Empresa: faltam a folha e a energia/);
+ assert.match(preview({familia:'casal',motivo:'imposto'}),/Você: falta a renda/);
+ assert.match(preview({familia:'ninguem',dividendos:80000}),/Você: falta a renda/);
+ assert.doesNotMatch(preview(scenarios[0].state.facts),/falta a renda|falta a energia/);
+ context.buildV5();assert.equal(node('homeDiagnosticTiming').textContent,context.axesData.modos.rapido+' · '+context.axesData.modos.completo);
+ assert.match(node('homeDiagnosticTiming').textContent,/15 perguntas/);assert.match(node('homeDiagnosticTiming').textContent,/cerca de 40 perguntas/);
+ assert.doesNotMatch(html.split('id="v-inicio"')[1].split('<!-- PERFIL -->')[0],/20 perguntas|78 no modo/);
+});
+
 test('V6 cases replace boxed cards with 34 expandable rows and preserve every narrative and source',()=>{
   for(const key of ['setor','destino','modelo','resultado'])node('case-'+key).value='';context.renderCases();
   const markup=node('caseList').innerHTML+context.aggregatesMarkup();
