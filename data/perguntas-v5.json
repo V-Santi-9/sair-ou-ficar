@@ -1753,14 +1753,16 @@
       {
         "id": "fica/fica",
         "titulo": "Reorganizar no Brasil",
-        "modelo": null,
-        "caso": null
+        "modelo": "reorganizar",
+        "caso": "c20",
+        "nome": "Itaú, WEG"
       },
       {
         "id": "fica/muda",
         "titulo": "Mudar de país",
-        "modelo": null,
-        "caso": null
+        "modelo": "dono_muda_empresa_fica",
+        "caso": "c21",
+        "nome": "Paulo Marcelo"
       },
       {
         "id": "fora/fica",

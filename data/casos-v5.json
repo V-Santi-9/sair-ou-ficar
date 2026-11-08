@@ -233,7 +233,8 @@
       "casos": [
         "c15",
         "r10",
-        "r14"
+        "r14",
+        "c21"
       ],
       "conf": "imprensa"
     },
@@ -267,7 +268,9 @@
       "presenca": "Sem casos específicos na base.",
       "por_que_vai": "",
       "o_que_trava": "",
-      "casos": [],
+      "casos": [
+        "c20"
+      ],
       "conf": "imprensa"
     }
   ],
@@ -781,6 +784,64 @@
         }
       ],
       "conf": "oficial"
+    },
+    {
+      "id": "c20",
+      "empresa": "Itaú, Vale, WEG e outras listadas na B3",
+      "setor": "outro",
+      "origem": "Brasil",
+      "destino": "Brasil",
+      "cidade": "",
+      "modelo": "reorganizar",
+      "regime": "Dividendos extraordinários antes da Lei 15.270/2025",
+      "quando": "dezembro de 2025",
+      "porte": "grande",
+      "investimento": "não se aplica",
+      "empregos": "",
+      "motivo": "Distribuir lucro acumulado ainda isento, antes da retenção de 10% sobre dividendos acima de R$ 50 mil por mês, que começou em janeiro de 2026.",
+      "mudanca_valor": "O Itaú aprovou R$ 20 bilhões em dividendos extraordinários, pagos em 19 de dezembro de 2025. O BTG contou mais de R$ 35 bilhões em extraordinários anunciados no período, segundo a Money Times.",
+      "desafios": "É o caminho de quem fica: ninguém mudou de país; as empresas mudaram o calendário. Só funciona uma vez, para o lucro já acumulado.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "concluido",
+      "fontes": [
+        {
+          "t": "Forbes Brasil, dezembro de 2025: corrida bilionária para fugir da nova tributação",
+          "u": "https://forbes.com.br/forbes-money/2025/12/empresas-entram-em-corrida-bilionaria-para-fugir-da-nova-tributacao-de-dividendos/"
+        },
+        {
+          "t": "Money Times: BTG vê avalanche de dividendos",
+          "u": "https://www.moneytimes.com.br/nova-tributacao-impulsiona-avalanche-de-dividendos-e-btg-ve-mais-anuncios-a-frente-igdl/"
+        }
+      ],
+      "conf": "imprensa"
+    },
+    {
+      "id": "c21",
+      "empresa": "Paulo Marcelo (provedor de internet no Pará e em Mato Grosso)",
+      "setor": "tecnologia",
+      "origem": "Pará e Mato Grosso",
+      "destino": "Portugal",
+      "cidade": "Esposende",
+      "modelo": "dono_muda_empresa_fica",
+      "regime": "Mudou com a família; abriu empresa de logística em Portugal",
+      "quando": "antes de 2026",
+      "porte": "pequeno_medio",
+      "investimento": "cerca de € 150 mil em Portugal",
+      "empregos": "30 em Portugal",
+      "motivo": "Mudança de vida: segundo O Minho, ele se apaixonou pelo país numa viagem de férias.",
+      "mudanca_valor": "Não divulgada. A empresa de internet continua no Brasil.",
+      "desafios": "Diz que não consegue investir mais em Portugal enquanto não regulariza os documentos na AIMA e pensa em vender a empresa e ir para a Espanha.",
+      "citacao": "",
+      "quem_disse": "",
+      "resultado": "em_operacao",
+      "fontes": [
+        {
+          "t": "O Minho, 29/08/2026",
+          "u": "https://ominho.pt/empresario-brasileiro-emprega-30-pessoas-em-esposende-mas-esta-a-pensar-mudar-se-para-espanha/"
+        }
+      ],
+      "conf": "imprensa"
     }
   ],
   "modelos": {
@@ -792,7 +853,9 @@
     "filial_mercado_externo": "Filial para entrar num mercado novo",
     "terra": "Compra de terra e produção agrícola",
     "mudanca_vida": "Mudança de vida com negócio pequeno",
-    "contexto": "Contexto do setor (não é empresa brasileira)"
+    "contexto": "Contexto do setor (não é empresa brasileira)",
+    "reorganizar": "Fica no Brasil e reorganiza dividendos, holding ou sucessão",
+    "dono_muda_empresa_fica": "Dono se muda, empresa continua no Brasil"
   },
   "fontes_regulatorias_farma": [
     {

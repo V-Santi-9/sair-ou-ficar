@@ -214,9 +214,9 @@ test('Similarity scores use supplied evidence, stable ordering and at most five 
   for(const m of matches)assert.equal(m.score,m.reasons.reduce((a,r)=>a+r[1],0));
   for(const m of context.similarCases(scenarios[2].state.facts,context.calculateDiagnostic(scenarios[2].state).recommended[0]))if(m.record.relato)assert.ok(m.reasons.every(r=>r[0]!=='Modelo do caminho'&&r[0]!=='Porte compatível'));
 });
-test('All 34 records have canonical anchors, all 13 sectors only contain linked records; filters combine and reset',()=>{
+test('All records have canonical anchors, all 13 sectors only contain linked records; filters combine and reset',()=>{
   for(const k of ['setor','destino','modelo','resultado'])node('case-'+k).value='';context.renderCases();capture('all-cases','caseList');
-  const markup=node('caseList').innerHTML;assert.equal((markup.match(/id="caso-/g)||[]).length,34);
+  const markup=node('caseList').innerHTML;assert.equal((markup.match(/id="caso-/g)||[]).length,context.caseRecords().length);
   for(const record of context.caseRecords())assert.equal((markup.match(new RegExp('id="caso-'+record.id+'"','g'))||[]).length,1);
   for(const sector of context.caseData.setores){context.renderSector(sector.id);const actual=Array.from(node('sectorReport').innerHTML.matchAll(/data-case="([^"]+)"/g),m=>m[1]);const expected=Array.from(context.caseRecords().filter(c=>c.sectors.includes(sector.id)),c=>c.id);assert.deepEqual(actual,expected);capture('sector-'+sector.id,'sectorReport');}
   for(const [key,value]of [['setor','textil'],['destino','Paraguai'],['modelo','terceirizacao'],['resultado','em_operacao']]){node('case-'+key).value=value;context.renderCases();}
@@ -390,7 +390,7 @@ test('V8b matrix keeps row labels outside the cells and shows only paths, docume
   cells.forEach((cell,i)=>{
    const text=cell[2].replace(/<\/tspan><tspan[^>]*>/g,' ').replace(/<[^>]*>/g,'');assert.ok(text.includes(expected[i]));
    assert.doesNotMatch(cell[2],/Empresa fica|Empresa produz fora|Produz fora|matrix-row-label|Sem caso documentado/);
-   if(i<2)assert.doesNotMatch(cell[2],/matrix-case/);else assert.match(cell[2],new RegExp('class="matrix-case"[^>]*>'+(i===2?'Lupo':'BOOS')+'<'));
+   const nome=context.axesData.parametros.matriz[i].nome;if(!nome)assert.doesNotMatch(cell[2],/matrix-case/);else assert.ok(cell[2].includes('class="matrix-case"')&&cell[2].includes('>'+nome.replace(/&/g,'&amp;')+'<'));
   });
   assert.equal((markup.match(/Seu resultado/g)||[]).length,1);
  }
@@ -409,12 +409,12 @@ test('V8b partial panel identifies missing energy and income; cover reads both m
  assert.doesNotMatch(html.split('id="v-inicio"')[1].split('<!-- PERFIL -->')[0],/20 perguntas|78 no modo/);
 });
 
-test('V6 cases replace boxed cards with 34 expandable rows and preserve every narrative and source',()=>{
+test('V6 cases replace boxed cards with one expandable row per record and preserve every narrative and source',()=>{
   for(const key of ['setor','destino','modelo','resultado'])node('case-'+key).value='';context.renderCases();
   const markup=node('caseList').innerHTML+context.aggregatesMarkup();
   // V5: 34 .case-card boxes and one .aggregate-strip grid; V6: none.
   assert.doesNotMatch(markup,/class="(?:case-card|aggregate-strip|sector-tile|match-note)\b/);
-  assert.equal((markup.match(/<details class="case-entry"/g)||[]).length,34);
+  assert.equal((markup.match(/<details class="case-entry"/g)||[]).length,context.caseRecords().length);
   assert.equal((markup.match(/class="aggregate-lead"/g)||[]).length,3);
   assert.equal((markup.match(/class="aggregate-line"/g)||[]).length,4);
   for(const c of context.caseRecords()){
