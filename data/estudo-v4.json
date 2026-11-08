@@ -706,15 +706,15 @@
   {
    "id": "py-ueno",
    "pais": "Paraguai",
-   "norma": "Intervenção do Banco Central no Ueno Bank e crise política",
+   "norma": "Intervenção do Banco Central no Ueno Bank e destituição de Peña",
    "tema": "Bancos e garantia de depósitos",
    "data": "2026-11-03",
    "vigencia": "2026-11-03",
    "status": "recente",
    "impacto": "alto",
-   "resumo": "Em 2 de novembro de 2026 o Banco Central do Paraguai decidiu, por unanimidade, colocar o Ueno Bank em resolução porque o índice de solvência caiu abaixo da metade do mínimo legal; a intervenção foi anunciada em 3 de novembro e suspendeu transferências, cartões e aplicativo. O Ueno tinha cerca de 3 milhões de clientes (perto de 60% dos adultos), depósitos de cerca de US$ 2,8 bilhões e administrava de US$ 800 a 850 milhões em dinheiro público, com US$ 355 a 380 milhões do instituto de previdência (IPS). A garantia de depósitos cobre até 228,3 milhões de guaranis (cerca de US$ 38 mil) por depositante e por instituição; cerca de 97% dos clientes estão dentro do limite. O presidente Santiago Peña, ex-sócio do grupo dono do banco até 2025, tentou renunciar em 5 de novembro; o Congresso não aceitou, a Câmara aprovou o julgamento político por 78 a 0 e o Senado abriu o processo. O presidente do Banco Central renunciou e a Procuradoria abriu três investigações.",
-   "efeito_para_quem_sai": "Para quem tem empresa ou vida no Paraguai, o risco deixou de ser só fiscal. Saldo acima de cerca de US$ 38 mil num mesmo banco não tem garantia integral e espera a liquidação. Empresas tiveram de adiantar salário a funcionários com conta no Ueno. A estabilidade política, um dos argumentos de venda do país, está em julgamento.",
-   "o_que_observar": "Votação no Senado (30 de 45 votos para destituir; o vice Pedro Alliana assume se Peña cair), prazo de pagamento da garantia (15 dias, prorrogáveis por mais 15; primeira fase para saldos até 10 milhões de guaranis), transferência dos depósitos para outros bancos, sinais de contágio, reação das agências de risco e continuidade das políticas de atração de investimento. Regra prática: dividir caixa operacional e reservas entre bancos e manter parte fora do Paraguai.",
+   "resumo": "Em 2 de novembro de 2026 o Banco Central do Paraguai decidiu, por unanimidade, colocar o Ueno Bank em resolução porque o índice de solvência caiu abaixo da metade do mínimo legal; a intervenção foi anunciada em 3 de novembro e suspendeu transferências, cartões e aplicativo. O Ueno tinha cerca de 3 milhões de clientes (perto de 60% dos adultos), depósitos de cerca de US$ 2,8 bilhões e administrava de US$ 800 a 850 milhões em dinheiro público, com US$ 355 a 380 milhões do instituto de previdência (IPS). A garantia de depósitos cobre até 228,3 milhões de guaranis (cerca de US$ 38 mil) por depositante e por instituição; cerca de 97% dos clientes estão dentro do limite. O presidente Santiago Peña, ex-sócio do grupo dono do banco até 2025, tentou renunciar em 5 de novembro; o Congresso não aceitou e, em 6 de novembro, o Senado o destituiu por 44 votos, com uma ausência. O vice Pedro Alliana assumiu a Presidência e completa o mandato até agosto de 2028; a oposição também pediu o julgamento político dele. O presidente do Banco Central renunciou e a Procuradoria abriu três investigações. Em 5 de novembro o Banco Central começou a pagar a garantia, pelo Banco Nacional de Fomento, a quem tem até 10 milhões de guaranis (cerca de US$ 1.600), não deve ao Ueno e tem conta em outro banco; até 8 de novembro não havia calendário para os demais.",
+   "efeito_para_quem_sai": "Para quem tem empresa ou vida no Paraguai, o risco deixou de ser só fiscal. Saldo acima de cerca de US$ 38 mil num mesmo banco não tem garantia integral e espera a liquidação; mesmo dentro do limite, o dinheiro sai em etapas. Empresas tiveram de adiantar salário a funcionários com conta no Ueno. O país trocou de presidente em quatro dias, por um caso bancário ligado ao próprio presidente: a estabilidade política, um dos argumentos de venda do país, ficou em dúvida.",
+   "o_que_observar": "Calendário de pagamento da garantia para saldos acima de 10 milhões de guaranis, transferência dos depósitos para outros bancos, sinais de contágio, reação das agências de risco, o pedido de julgamento político contra Alliana, quem o Congresso escolhe para vice e se o novo governo mantém as políticas de atração de investimento (maquila, residência, imposto territorial). Regra prática: dividir caixa operacional e reservas entre bancos e manter parte fora do Paraguai.",
    "fontes": [
     {
      "t": "AP (via ABC News), 03/11/2026: Paraguai intervém no Ueno Bank",
@@ -739,6 +739,26 @@
     {
      "t": "Gizmodo Brasil, 06/11/2026: brasileiros afetados no Paraguai",
      "u": "https://www.gizmodo.com.br/banco-fecha-as-portas-e-deixa-milhoes-sem-dinheiro-brasileiros-relatam-desespero-no-paraguai-74237",
+     "tipo": "imprensa"
+    },
+    {
+     "t": "Semana, 06/11/2026: Senado destitui Peña",
+     "u": "https://www.semana.com/mundo/articulo/el-senado-destituye-al-presidente-de-paraguay-en-juicio-politico-por-escandalo-bancario/202638/",
+     "tipo": "imprensa"
+    },
+    {
+     "t": "ABC Color, 06/11/2026: cronologia da destituição e posse de Alliana",
+     "u": "https://www.abc.com.py/politica/2026/11/06/en-vivo-juicio-politico-a-pena-senado-retoma-proceso-en-medio-de-renuncia-trabada-y-pedido-de-prorroga/",
+     "tipo": "imprensa"
+    },
+    {
+     "t": "ABC Color, 05/11/2026: BCP inicia pagamento a poupadores do Ueno",
+     "u": "https://www.abc.com.py/economia/2026/11/05/bcp-inicia-pago-a-ahorristas-de-ueno-bank-quienes-cobran-primero-y-quienes-no/",
+     "tipo": "imprensa"
+    },
+    {
+     "t": "Infobae, 06/11/2026: Banco Central começa a devolver depósitos",
+     "u": "https://www.infobae.com/america/america-latina/2026/11/06/crisis-en-paraguay-el-banco-central-comenzo-a-devolver-los-depositos-de-los-clientes-de-ueno-bank-tras-su-intervencion-por-insolvencia/",
      "tipo": "imprensa"
     }
    ]
@@ -877,6 +897,13 @@
    "v": "US$ 800 a 850 milhões, dos quais US$ 355 a 380 milhões da previdência (IPS)",
    "fonte": "AP, 03/11/2026; Bloomberg Línea, 05/11/2026",
    "u": "https://www.bloomberglinea.com/latinoamerica/quiebra-de-ueno-bank-sacude-a-paraguay-miles-reclaman-sus-ahorros-y-el-congreso-debate-destituir-a-pena/",
+   "conf": "imprensa"
+  },
+  {
+   "t": "Votação no Senado do Paraguai que destituiu Santiago Peña, 6/11/2026",
+   "v": "44 votos a favor, uma ausência, de 45 senadores; Pedro Alliana assumiu",
+   "fonte": "Semana e CNN em Espanhol, 06/11/2026",
+   "u": "https://www.semana.com/mundo/articulo/el-senado-destituye-al-presidente-de-paraguay-en-juicio-politico-por-escandalo-bancario/202638/",
    "conf": "imprensa"
   }
  ],
@@ -1336,6 +1363,18 @@
   "Número e data da nova Lei de Estrangeiros portuguesa (citada como Lei 62/2026) e data de publicação da LO 1/2026 a conferir no Diário da República."
  ],
  "atualizacoes": [
+  {
+   "data": "2026-11-08",
+   "titulo": "Paraguai troca de presidente; simulador corrige impostos de Espanha e EUA",
+   "itens": [
+    "Em 6 de novembro o Senado do Paraguai destituiu Santiago Peña por 44 votos, pela quebra do Ueno Bank. O vice Pedro Alliana assumiu e fica até agosto de 2028.",
+    "O Banco Central começou em 5 de novembro a pagar a garantia do Ueno, primeiro a quem tem até 10 milhões de guaranis, cerca de US$ 1.600. Para os demais, ainda não há data.",
+    "Espanha: o simulador usava 28% fixos. A escala da poupança vai de 19% a 30%; para R$ 80 mil por mês de dividendos, a taxa média fica em 22,3%.",
+    "EUA: sem tratado com o Brasil, dividendo de empresa brasileira paga a tabela federal comum, de 10% a 37%. Para R$ 80 mil por mês, a taxa média é de 17,5%, e não de 24%.",
+    "Portugal (28%) e Uruguai (0% com a opção de novo residente por 11 anos, 12% sem ela) foram conferidos e seguem como estavam."
+   ],
+   "automatica": false
+  },
   {
    "data": "2026-11-06",
    "pais": "Paraguai",

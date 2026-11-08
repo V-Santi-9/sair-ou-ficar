@@ -117,7 +117,13 @@ test('Opinion explains nonfiscal choices without claiming a safety ranking', () 
  test('All simulator destination rates and credit defaults are unchanged; Uruguay hint covers 2026', () => {
   const start = script.indexOf('  var simDests = ');
   const defaults = runInContext(script.slice(start, script.indexOf('\n  ];',start)+5)+';simDests;', createContext({}));
-  assert.deepEqual(JSON.parse(JSON.stringify(defaults.map(d=>[d.id,d.rate,d.credit]))), [['py',0,true],['uy',0,true],['ae',0,true],['pt',28,true],['es',28,true],['us',24,true],['xx',0,true]]);
+  assert.deepEqual(JSON.parse(JSON.stringify(defaults.map(d=>[d.id,d.rate,d.credit]))), [['py',0,true],['uy',0,true],['ae',0,true],['pt',28,true],['es',23,true],['us',18,true],['xx',0,true]]);
   const hint=defaults.find(d=>d.id==='uy').hint;
-  assert.match(hint,/2026/);assert.match(hint,/2025/);assert.match(hint,/conferir/i);assert.doesNotMatch(hint,/Conferido/);
+  assert.match(hint,/2026/);assert.match(hint,/2025/);
+  const s2=script.indexOf('  function destRate(');const ctx2=createContext({});runInContext(script.slice(start, script.indexOf('\n  ];',start)+5)+';'+script.slice(s2,script.indexOf('\n  }',s2)+4),ctx2);
+  // Espanha: R$ 960 mil / 6,1317 = € 156.564; 6000×19% + 44000×21% + 106564×23% = 34.890 → 22,3%.
+  assert.equal(runInContext('destRate(simDests.find(d=>d.id==="es"),960000)',ctx2),22.3);
+  // EUA: US$ 174.504 − 16.100 = 158.404; 1240 + 4560 + 12166 + 12648,96 = 30.614,96 → 17,5%.
+  assert.equal(runInContext('destRate(simDests.find(d=>d.id==="us"),960000)',ctx2),17.5);
+  assert.equal(runInContext('destRate(simDests.find(d=>d.id==="pt"),960000)',ctx2),28);assert.match(hint,/conferir/i);assert.doesNotMatch(hint,/Conferido/);
 });
