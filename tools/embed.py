@@ -38,6 +38,7 @@ def main():
     h = HTML.read_text(encoding="utf-8")
     study = load("data/estudo-v4.json")
     h = replace_var(h, "study", study)
+    h = replace_var(h, "sharmaData", load("data/regras-sharma.json"))
     h = replace_var(h, "caseData", load("data/casos-v5.json"))
     h = replace_var(h, "axesData", load("data/perguntas-v5.json"))
     h = replace_var(h, "materials", load("img/materiais/indice.json"))
