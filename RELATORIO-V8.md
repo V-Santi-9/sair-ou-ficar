@@ -649,3 +649,65 @@ As quatro novas regressões cobrem artigos dos sete destinos, “para o Paraguai
 Arquivos tocados nesta revisão: `data/perguntas-v5.json`, `index.html`, `tests/rendered.test.cjs`, `tests/v8-scenarios.cjs`, `tests/README.md` e este relatório. A alteração em `tools/ROTINA.md` e a retirada de `tests/v5-scenarios.cjs` já pertenciam à v8 e foram preservadas.
 
 Tamanho final de `index.html`: **516.288 bytes**. Restam as capturas de revisão visual em 380 px, 820 px e desktop, nos temas claro e escuro. Os testes sem navegador verificam o HTML gerado e o comportamento, mas não comprovam o layout renderizado.
+
+## Apêndice v8c
+
+Data: 9 de novembro de 2026. Link compartilhável do resultado do diagnóstico, sem commit, push ou Chromium. Alterados `index.html`, `tests/rendered.test.cjs`, `tests/v8-scenarios.cjs` e este relatório; os JSON não precisaram mudar.
+
+### Formato do código
+
+```text
+8.<modo>.<resposta 1>.<resposta 2>...<resposta 39>
+```
+
+- `8` é a versão; `r` identifica o rápido e `c`, o completo.
+- Há sempre 39 posições, na ordem de `axesData.fatos` no JSON. A ordem das perguntas e das opções faz parte do contrato da versão: mudanças nessa ordem exigem uma nova versão do código.
+- Opções usam seu índice a partir de zero, em base 36. Uma opção explícita “Não sei” mantém seu índice, pois pode acionar premissas do cálculo; `n` representa valor nulo, pergunta pulada ou posição não aplicável ao modo/às condições.
+- Números inteiros usam base 36. O inteiro 23 é escrito `0n`, para não se confundir com o marcador de nulo.
+- Números decimais usam `significando~escala`, ambos em base 36: o valor é o significando decimal multiplicado por 10 elevado à escala negativa. Isso preserva exatamente o `Number` aceito pelo formulário, inclusive centavos e valores muito pequenos, sem arredondar ao compartilhar. Não há JSON nem base64.
+- O código contém apenas versão, modo e respostas. Não inclui nome, data, histórico ou outros campos do estado.
+
+Exemplo real, com os fatos do cenário têxtil (84 caracteres no código):
+
+```text
+https://v-santi-9.github.io/sair-ou-ficar/#perfil/r=8.r.0.0.3.2.0.2.1.0.3.2.0.1pq8.0.0.0.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n.n
+```
+
+O modo completo, preenchido com os dois valores numéricos no limite aceito, produziu **105 caracteres**. Os testes também verificam o limite de menos de 120 caracteres com valores fracionários.
+
+### Comportamento
+
+`validateDiagnostic` centraliza as regras de opções, números finitos, mínimo zero, teto `Number.MAX_SAFE_INTEGER / 10000`, modo e condições. A leitura local mantém a recuperação anterior, descartando fatos inválidos; a leitura de links rejeita respostas inválidas. `decodeDiagnostic` devolve `null` para código malformado, versão diferente de 8, posições ausentes/excedentes, opção inexistente, valor negativo/acima do limite ou resposta preenchida fora do modo/condição. As falhas são capturadas e levam à intro com a nota solicitada.
+
+`#perfil/r=<código>` ativa a view e a navegação Diagnóstico e renderiza `done: true`. A flag de compartilhamento impede a persistência desse estado. A faixa “Resultado compartilhado. As respostas são de quem enviou o link.” oferece “Fazer o meu”, que abre `#perfil/fresh`. “Refazer” num resultado compartilhado também vai à intro nova, sem apagar o diagnóstico local; voltar à rota simples permite retomar o diagnóstico salvo.
+
+“Copiar link do resultado” aparece antes de “Refazer”. Em telas pequenas ou com ponteiro de toque, usa `navigator.share` quando disponível, com manchete e URL. Cancelar o compartilhamento não copia por engano. Na ausência/falha do compartilhamento nativo, tenta o clipboard; sucesso anuncia “Link copiado.” em `role="status"`. Se o clipboard faltar ou recusar acesso, exibe, foca e seleciona o link num `input readonly` ao lado dos botões. A nota abaixo informa que o link contém respostas e valores.
+
+O resultado conserva a data de abertura por extenso. No compartilhado, a nota lateral informa “Calculado com os dados do site em <data por extenso>”. A data não é codificada; o resultado é recalculado com a base disponível ao abrir o site.
+
+### Validação
+
+```text
+python3 tools/embed.py
+embed ok: 30 normas, 23 números
+
+node tests/simulator.test.cjs
+18 testes; 18 passaram; 0 falhas
+
+node tests/rendered.test.cjs
+45 testes; 45 passaram; 0 falhas
+
+node tests/v8-scenarios.cjs
+11 testes; 11 passaram; 0 falhas
+
+python3 tests/validate_html.py
+Todos os checks passaram: contraste, mapa, HTML, IDs, referências, CSP,
+temas, movimento reduzido e tamanho (533.167 bytes, abaixo de 700.000).
+
+git diff --check
+Sem erros.
+```
+
+Os cinco testes anteriores de cenários continuam passando: quatro perfis com contas conhecidas e um teste de matriz/contrafactuais. A ida e volta cobre os quatro perfis e os contrafactuais do quinto teste, comparando decisões e valores; também cobre modo completo, eixos, nulos, “Não sei”, zero, 23, decimais e limites. As regressões de renderização exercitam a rota real, navegação ativa, faixa, intro nova, retorno ao estado local, links inválidos, armazenamento negado, ausência de escritas no localStorage, clipboard e compartilhamento nativo.
+
+Revisão visual em navegador não executada, conforme a restrição de não usar Chromium.

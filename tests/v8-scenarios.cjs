@@ -24,7 +24,7 @@ if(require.main===module){
  const ctx=createContext({fmtBRL:v=>'R$ '+Math.round(v).toLocaleString('pt-BR')});
  for(const name of ['axesData'])runInContext(script.split('\n').find(l=>l.startsWith('  var '+name+' = ')),ctx);
  runInContext(script.slice(script.indexOf('  var simDests = '),script.indexOf('\n  ];',script.indexOf('  var simDests = '))+5),ctx);
- for(const name of ['esc','irpfmRate','stayTax','goTax','applicable','diagnosticQuestions','factLabel','destinationPhrase','destRate','ownerDestination','ownerAccount','diagnosticDecision','axisAnswer','calculateDiagnostic','ruleMatches','diagnosticChanges','diagnosticFacts','matrixMarkup']){
+ for(const name of ['esc','irpfmRate','stayTax','goTax','applicable','diagnosticQuestions','factLabel','destinationPhrase','destRate','ownerDestination','ownerAccount','diagnosticDecision','axisAnswer','calculateDiagnostic','ruleMatches','diagnosticChanges','diagnosticFacts','matrixMarkup','validateDiagnostic','diagnosticNumberCode','encodeDiagnostic','decodeDiagnostic']){
   const a=script.indexOf('  function '+name+'('),lineEnd=script.indexOf('\n',a),b=script.slice(a,lineEnd).trimEnd().endsWith('}')?lineEnd:script.indexOf('\n  }',a)+4;runInContext(script.slice(a,b),ctx);
  }
  for(const s of scenarios)test(s.name,()=>{
@@ -39,7 +39,35 @@ if(require.main===module){
  test('5. Matriz acessível e contrafactuais recalculados nos cenários 1 e 2',()=>{
   for(const s of scenarios.slice(0,2)){
    const d=ctx.diagnosticDecision(s.state.facts),markup=ctx.matrixMarkup(d,false);assert.match(markup,/<svg[^>]*role="img"[^>]*aria-label="[^"]+"/);assert.equal((markup.match(/class="matrix-selected"/g)||[]).length,1);
-   const changes=ctx.diagnosticChanges(s.state);assert.ok(changes.length>=1);for(const change of changes){const next=ctx.diagnosticDecision(ctx.diagnosticFacts({mode:s.state.mode,facts:{...s.state.facts,[change.id]:change.value}}));assert.deepEqual(JSON.parse(JSON.stringify(next)),JSON.parse(JSON.stringify(change.decision)));assert.ok(next.owner.verdict!==d.owner.verdict||next.company.verdict!==d.company.verdict);}
+   const changes=ctx.diagnosticChanges(s.state);assert.ok(changes.length>=1);for(const change of changes){const changed={version:8,mode:s.state.mode,facts:{...s.state.facts,[change.id]:change.value}};const next=ctx.diagnosticDecision(ctx.diagnosticFacts(changed));assert.deepEqual(JSON.parse(JSON.stringify(ctx.calculateDiagnostic(ctx.decodeDiagnostic(ctx.encodeDiagnostic(changed))).decision)),JSON.parse(JSON.stringify(next)));assert.deepEqual(JSON.parse(JSON.stringify(next)),JSON.parse(JSON.stringify(change.decision)));assert.ok(next.owner.verdict!==d.owner.verdict||next.company.verdict!==d.company.verdict);}
   }
  });
+ for(const scenario of scenarios)test('V8c round trip: '+scenario.name,()=>{
+  const code=ctx.encodeDiagnostic(scenario.state),decoded=ctx.decodeDiagnostic(code);
+  assert.match(code,/^8\.r\.[0-9a-z.~]+$/);assert.ok(code.length<120);assert.equal(decoded.done,true);
+  assert.equal(ctx.encodeDiagnostic(decoded),code);
+  assert.deepEqual(JSON.parse(JSON.stringify(ctx.calculateDiagnostic(decoded).decision)),JSON.parse(JSON.stringify(ctx.calculateDiagnostic(scenario.state).decision)));
+  assert.deepEqual(JSON.parse(JSON.stringify(ctx.calculateDiagnostic(decoded).axes)),JSON.parse(JSON.stringify(ctx.calculateDiagnostic(scenario.state).axes)));
+ });
+ test('V8c complete mode, nulls, unknown options and exact fractional amounts remain compact',()=>{
+  const facts=Object.fromEntries(ctx.axesData.fatos.map(q=>[q.id,q.tipo==='numero'?Number.MAX_SAFE_INTEGER/10000:q.opcoes[0].id]));
+  Object.assign(facts,{familia:'filhos',folha:'ns',energia:'ns',industria:'sim'});
+  const complete={version:8,mode:'completo',facts};
+  for(const amount of [0,23,80000.25,0.1,1e-7,Number.MIN_VALUE,123456.78901234567,Number.MAX_SAFE_INTEGER/10000]){
+   facts.dividendos=amount;const code=ctx.encodeDiagnostic(complete),decoded=ctx.decodeDiagnostic(code);
+   assert.ok(code.length<120,code.length);assert.equal(decoded.facts.dividendos,amount);assert.equal(decoded.facts.rend_ext,facts.rend_ext);
+   assert.deepEqual(JSON.parse(JSON.stringify(decoded.facts)),facts);
+   assert.deepEqual(JSON.parse(JSON.stringify(ctx.calculateDiagnostic(decoded).decision)),JSON.parse(JSON.stringify(ctx.calculateDiagnostic(complete).decision)));
+  }
+  facts.energia=null;facts.dividendos=null;const decoded=ctx.decodeDiagnostic(ctx.encodeDiagnostic(complete));assert.equal(decoded.facts.energia,null);assert.equal(decoded.facts.dividendos,null);assert.equal(decoded.facts.folha,'ns');
+ });
+ test('V8c rejects malformed, old, incomplete, invalid options, amounts and forbidden facts',()=>{
+  const code=ctx.encodeDiagnostic(scenarios[0].state),tokens=code.split('.');
+  const replace=(id,value)=>{const changed=[...tokens];changed[ctx.axesData.fatos.findIndex(q=>q.id===id)+2]=value;return changed.join('.');};
+  for(const bad of [null,{},'',code.slice(0,-2),code+'.n',code.replace(/^8/,'7'),code.replace('.r.','.x.'),code+'%',replace('setor','z'),replace('dividendos','-1'),replace('dividendos','Infinity'),replace('dividendos','zzzzzzzzzzzz'),replace('dividendos','1~zz'),replace('capital','0')])assert.equal(ctx.decodeDiagnostic(bad),null,String(bad));
+  const hidden=ctx.encodeDiagnostic(scenarios[1].state).split('.');hidden[7]='0';assert.equal(ctx.decodeDiagnostic(hidden.join('.')),null);
+  const saved={...scenarios[0].state,facts:{...scenarios[0].state.facts,dividendos:-1,capital:'1000'}};
+  assert.equal(ctx.validateDiagnostic(saved,true),null);assert.equal(ctx.validateDiagnostic(saved,false).facts.dividendos,undefined);assert.equal(ctx.validateDiagnostic(saved,false).facts.capital,undefined);
+ });
+
 }

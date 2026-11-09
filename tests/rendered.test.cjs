@@ -37,12 +37,12 @@ runInContext(script.split('\n').find(line=>line.startsWith('  var study = ')),co
 const v4Functions=['esc','dateText','copy','sourceLink','statusBadge','dossierLink','countryOf','countryItems','selectFilter','unique','emptyText','attentionNorms','normReferences','filterNorms','normRow','renderNorms','renderTimeline','storyMarkup','storyGroups','renderStories','videoMarkup','mediaMarkup','renderLibrary','numberMarkup','renderCountry','sourceGroups','renderSources','buildStudy'];
 for (const name of v4Functions) runInContext(functionSource(name),context);
 for(const name of ['axesData','caseData'])runInContext(script.split('\n').find(line=>line.startsWith('  var '+name+' = ')),context);
-const v5Functions=['factLabel','destinationPhrase','whyLine','destRate','ownerDestination','diagnosticDecision','axisAnswer','diagnosticChanges','diagnosticFacts','matrixMarkup','gainFormula','axesMarkup','cancelDiagnosticAdvance','queueDiagnosticAdvance','diagnosticPreviewMarkup','updateDiagnosticPreview','bindDiagnostic','applicable','diagnosticQuestions','ruleMatches','calculateDiagnostic','sectorMembership','caseRecords','compatibleSize','similarCases','sectorName','resultName','caseCard','caseTable','aggregatesMarkup','sectorMarkup','renderCases','renderSector','ownerAccount','calculationMarkup','signed','pathNextSteps','diagnosticReport','ruleMarkup','persistDiagnostic','readDiagnostic','diagnosticIntro','renderDiagnostic','saveDiagnosticAnswer','advanceDiagnostic','closeNavigation','updateTopButton','buildV5'];
+const v5Functions=['factLabel','destinationPhrase','whyLine','destRate','ownerDestination','diagnosticDecision','axisAnswer','diagnosticChanges','diagnosticFacts','matrixMarkup','gainFormula','axesMarkup','cancelDiagnosticAdvance','queueDiagnosticAdvance','diagnosticPreviewMarkup','updateDiagnosticPreview','bindDiagnostic','applicable','diagnosticQuestions','ruleMatches','calculateDiagnostic','sectorMembership','caseRecords','compatibleSize','similarCases','sectorName','resultName','caseCard','caseTable','aggregatesMarkup','sectorMarkup','renderCases','renderSector','ownerAccount','calculationMarkup','signed','pathNextSteps','diagnosticReport','ruleMarkup','persistDiagnostic','validateDiagnostic','diagnosticNumberCode','encodeDiagnostic','decodeDiagnostic','shareDiagnostic','readDiagnostic','diagnosticIntro','renderDiagnostic','saveDiagnosticAnswer','advanceDiagnostic','closeNavigation','updateTopButton','buildV5'];
 for(const name of v5Functions)runInContext(functionSource(name),context);
 for(const name of ['materials'])runInContext(script.split('\n').find(line=>line.startsWith('  var '+name+' = ')),context);
 const v7Functions=['materialMatches','materialImage','materialFigure','materialsMarkup','openMaterial','closeMaterial','restoreMaterialFocus','materialFailure','scenarioSVG','scenarioSources','scenarioScreen','aggregate','aggregateSource','scenarioAccount','dividendFlow','flowMarkup','updateScenarioFlow','payrollAccount','factoryDrawing','gaugeSVG','productionMap','factoryPictograms','person','ownerDrawing','pharmaSymbol','residenceData','dotGroup','residenceDots','scenariosMarkup','milestoneDate','timelineMilestones','milestoneMarkup','miniTimelineMarkup','homeScenariosMarkup','focusScenario','buildV7'];
 for(const name of v7Functions)runInContext(functionSource(name),context);
-context.pendingScenarioJump='';context.diagnosticState=null;context.diagnosticSaved=null;context.diagnosticStorage=true;context.diagnosticTimer=null;context.diagnosticPanelOpen=true;
+context.pendingScenarioJump='';context.diagnosticState=null;context.diagnosticSaved=null;context.diagnosticStorage=true;context.diagnosticTimer=null;context.diagnosticPanelOpen=true;context.diagnosticShared=false;
 const fragments = [];
 function capture(name, id) {fragments.push([name,node(id).innerHTML]);}
 
@@ -376,7 +376,8 @@ test('V8b counterfactuals use short phrases, lowercase verdicts and the recalcul
  for(const scenario of scenarios)for(const change of context.diagnosticChanges(scenario.state)){
   const next=context.diagnosticDecision(context.diagnosticFacts({mode:scenario.state.mode,facts:{...scenario.state.facts,[change.id]:change.value}}));
   assert.deepEqual(JSON.parse(JSON.stringify(change.decision)),JSON.parse(JSON.stringify(next)));
-  if(change.verdict)assert.equal(change.verdict,change.verdict.toLocaleLowerCase('pt-BR'));
+  if(change.verdict)assert.equal(change.verdict.charAt(0),change.verdict.charAt(0).toLocaleLowerCase('pt-BR'));
+  assert.doesNotMatch(change.text,/passaria a a /);
  }
 });
 
@@ -407,6 +408,52 @@ test('V8b partial panel identifies missing energy and income; cover reads both m
  context.buildV5();assert.equal(node('homeDiagnosticTiming').textContent,context.axesData.modos.rapido+' · '+context.axesData.modos.completo);
  assert.match(node('homeDiagnosticTiming').textContent,/15 perguntas/);assert.match(node('homeDiagnosticTiming').textContent,/cerca de 40 perguntas/);
  assert.doesNotMatch(html.split('id="v-inicio"')[1].split('<!-- PERFIL -->')[0],/20 perguntas|78 no modo/);
+});
+
+
+test('V8c shared hash opens the report and active navigation without writing localStorage',()=>{
+ const key='sair-ficar-diagnostico-v8',saved=JSON.stringify({...scenarios[2].state,done:true}),memory=new Map([[key,saved]]);let writes=0;
+ context.localStorage={getItem:k=>memory.get(k)||null,setItem(){writes++;},removeItem(){writes++;}};
+ const views=['inicio','perfil'].map(route=>({getAttribute:()=>route,classList:{toggle(k,v){this.on=v;}},route}));
+ const nav={getAttribute:()=>'#perfil',setAttribute(k,v){this[k]=v;},removeAttribute(k){delete this[k];}};
+ context.document.querySelectorAll=selector=>selector==='section.view'?views:selector==='nav.main a'?[nav]:[];
+ const code=context.encodeDiagnostic(scenarios[0].state);context.location={href:'https://example.test/diagnostico/#perfil',hash:'#perfil/r='+code};
+ context.route();const markup=node('diagnosticApp').innerHTML;fragments.push(['v8c-shared',markup]);
+ assert.equal(views.find(v=>v.classList.on).route,'perfil');assert.equal(nav['aria-current'],'page');assert.equal(context.diagnosticState.done,true);
+ assert.match(markup,/Resultado compartilhado\. As respostas são de quem enviou o link\./);assert.match(markup,/data-diag-action="fresh">Fazer o meu/);
+ assert.match(markup,/Calculado com os dados do site em \d{1,2} de [a-zç]+ de \d{4}/);
+ assert.match(markup,/O link contém suas respostas, inclusive os valores/);
+ assert.ok(markup.indexOf('Copiar link do resultado')<markup.indexOf('>Refazer'));
+ assert.doesNotMatch(context.diagnosticReport(scenarios[0].state),/Resultado compartilhado|Calculado com os dados do site/);
+ context.persistDiagnostic();assert.equal(writes,0);assert.equal(memory.get(key),saved);
+ const click=action=>node('diagnosticApp').listeners.click[0]({target:{closest:s=>s==='[data-diag-action]'?{dataset:{diagAction:action}}:null}});
+ for(const action of ['fresh','restart']){
+  context.location.hash='#perfil/r='+code;context.route();click(action);assert.equal(context.location.hash,'perfil/fresh');context.route();
+  assert.equal(context.diagnosticState,null);assert.equal(context.diagnosticShared,false);assert.doesNotMatch(node('diagnosticApp').innerHTML,/Continuar de onde parou|Resultado compartilhado/);assert.equal(writes,0);
+ }
+ for(const hash of ['#perfil/r=7.bad','#perfil/r=','#perfil/r='+code.slice(0,-2),'#perfil/r=%E0%A4%A']){
+  context.location.hash=hash;assert.doesNotThrow(()=>context.route());assert.match(node('diagnosticApp').innerHTML,/Este link é de uma versão anterior do diagnóstico ou está incompleto\. Refaça o teste\./);assert.equal(context.diagnosticState,null);assert.equal(writes,0);
+ }
+ context.location.hash='#perfil/r='+code;context.route();context.location.hash='#perfil';context.route();
+ assert.match(node('diagnosticApp').innerHTML,/Continuar de onde parou/);assert.equal(memory.get(key),saved);
+ context.localStorage={getItem(){throw Error('denied');},setItem(){throw Error('denied');}};context.location.hash='#perfil/r='+code;assert.doesNotThrow(()=>context.route());assert.match(node('diagnosticApp').innerHTML,/Resultado compartilhado/);
+ context.document.querySelectorAll=()=>[];context.diagnosticIntro(true);
+});
+
+test('V8c share handler copies, selects fallback, invokes native mobile share and handles cancellation',async()=>{
+ context.diagnosticState={...scenarios[0].state,done:true};context.location={href:'https://example.test/?origem=teste#perfil'};
+ const url='https://example.test/?origem=teste#perfil/r='+context.encodeDiagnostic(context.diagnosticState),status=node('diagnosticShareStatus'),input=node('diagnosticShareLink');let selected=false,copied='',shared;
+ input.select=()=>selected=true;context.window.matchMedia=()=>({matches:false});context.navigator={clipboard:{async writeText(value){copied=value;}}};
+ const click=()=>node('diagnosticApp').listeners.click[0]({target:{closest:s=>s==='[data-diag-action]'?{dataset:{diagAction:'share'}}:null}});
+ await click();assert.equal(copied,url);assert.equal(status.textContent,'Link copiado.');assert.equal(input.hidden,true);
+ for(const navigator of [{},{clipboard:{async writeText(){throw Error('denied');}}}]){
+  selected=false;context.navigator=navigator;await click();assert.equal(input.value,url);assert.equal(input.hidden,false);assert.equal(selected,true);assert.equal(context.document.activeElement,input);assert.doesNotMatch(status.textContent,/Link copiado/);
+ }
+ context.window.matchMedia=()=>({matches:true});copied='';context.navigator={async share(value){shared=value;},clipboard:{async writeText(value){copied=value;}}};
+ await click();assert.equal(shared.url,url);assert.equal(shared.title,context.calculateDiagnostic(context.diagnosticState).decision.headline);assert.equal(copied,'');assert.equal(input.hidden,true);
+ context.navigator.share=async()=>{throw Object.assign(Error('cancelled'),{name:'AbortError'});};await click();assert.equal(copied,'');assert.equal(status.textContent,'');
+ context.navigator.share=async()=>{throw Error('unavailable');};await click();assert.equal(copied,url);assert.equal(status.textContent,'Link copiado.');
+ context.window.matchMedia=()=>({matches:false});context.diagnosticIntro(true);
 });
 
 test('V6 cases replace boxed cards with one expandable row per record and preserve every narrative and source',()=>{
