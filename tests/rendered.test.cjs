@@ -551,7 +551,7 @@ test('V7 material manifest is embedded exactly; all local images carry descripti
   for(const c of context.caseRecords())for(const image of context.materialMatches(c.fontes))assert.ok(context.caseCard(c,true).includes(image.arquivo));
   context.renderSector('farma');capture('v7-pharma-materials','sectorReport');for(const name of ['anvisa.webp'])assert.ok(node('sectorReport').innerHTML.includes(name));
   const combined=fragments.map(f=>f[1]).join('\n');const images=Array.from(combined.matchAll(/<img\b[^>]*>/g),m=>m[0]);assert.ok(images.length>=context.materials.length);
-  for(const img of images){assert.match(img,/src="img\/materiais\/[^"/]+\.webp"/);assert.match(img,/alt="Recorte de [^"]+"/);assert.match(img,/width="[1-9]\d*"/);assert.match(img,/height="[1-9]\d*"/);assert.match(img,/loading="lazy"/);}
+  for(const img of images){assert.match(img,/src="img\/(materiais|fotos)\/[^"/]+\.webp"/);if(/img\/materiais\//.test(img))assert.match(img,/alt="Recorte de [^"]+"/);else{assert.match(img,/alt="[^"]{20,}"/);assert.ok(readFileSync(path.join(root,img.match(/src="([^"]+)"/)[1])).length>0);}assert.match(img,/width="[1-9]\d*"/);assert.match(img,/height="[1-9]\d*"/);assert.match(img,/loading="lazy"/);}
   assert.doesNotMatch(combined,/<img[^>]*src="http/);
 });
 test('V7 actual UI handlers open/close accessible material dialog, restore focus and keep captions on failed images',()=>{

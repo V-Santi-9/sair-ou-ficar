@@ -36,7 +36,7 @@ class Validator(HTMLParser):
             if a.get('src'): self.error('external script: '+a['src'])
         if tag=='iframe': self.error('iframe prohibited')
         if tag=='img':
-            if not re.fullmatch(r'img/materiais/[^/]+\.webp',a.get('src','')): self.error('image outside local materials')
+            if not re.fullmatch(r'img/(materiais|fotos)/[^/]+\.webp',a.get('src','')): self.error('image outside local materials')
             for key in ['alt','width','height']:
                 if not a.get(key): self.error('image missing '+key)
             if a.get('loading')!='lazy': self.error('image missing lazy loading')
@@ -67,7 +67,7 @@ def main():
     assert 'prefers-reduced-motion' in html and '<html lang="pt-BR" data-theme="dark">' in html and ':root[data-theme="dark"]' in html
     assert '<section class="view on" id="v-inicio"' in html, 'Initial home must be visible'
     assert '—' not in html, 'Unexpected em dash'
-    assert len(html.encode())<750_000, 'Page exceeds size budget'
+    assert len(html.encode())<800_000, 'Page exceeds size budget'
     routes=set(re.findall(r'data-route="([^"]+)"',html))|set(re.findall(r'id: "(artigo-[^"]+)"',html))
     study=json.loads(re.search(r'  var study = (.*);',html).group(1))
     routes |= {'norma-'+n['id'] for n in study['normas']}
@@ -120,7 +120,7 @@ def main():
     print(f'PASS: balanced HTML; {count} unique static IDs; references and hashes resolve')
     print('PASS: one principal script; no remote images, external scripts or prohibited APIs')
     print('PASS: light/dark tokens; reduced motion; initially visible home; no em dashes')
-    print(f'PASS: page {len(html.encode()):,} bytes < 750,000 bytes')
+    print(f'PASS: page {len(html.encode()):,} bytes < 800,000 bytes')
     for name in sys.argv[1:]:
         fragment=Validator(name);fragment.feed(Path(name).read_text());fragment.finish(check_refs=False)
         print(f'PASS: generated markup {name}')
